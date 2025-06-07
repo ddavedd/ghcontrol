@@ -1,1 +1,0 @@
-echo "Louver Open" $(date) >> /home/hh12/logs/$(date +"%F").log
