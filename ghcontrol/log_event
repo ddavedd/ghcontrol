@@ -1,1 +1,0 @@
-echo $1 $(date) >> /home/$USER/logs/$(date +"%F").log
