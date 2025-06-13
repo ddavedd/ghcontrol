@@ -1,1 +1,1 @@
-echo $1 $(date +"%F %T %Z") >> /home/$USER/logs/$(date +"%F").$USER.log
+echo $1 $(date +"%F %T %Z") >> /home/USERNAME/logs/$(date +"%F").USERNAME.log
