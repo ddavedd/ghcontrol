@@ -1,1 +1,2 @@
-for filename in *.sh; do sed -i "s/USERNAME/${USER}/" ${filename}; done
+for filename in *.sh; do sed -i "s/USERNAME/${USER}/g" ${filename}; done
+sed -i "s/USERNAME/${USER}/g" gh_schedule.cron
