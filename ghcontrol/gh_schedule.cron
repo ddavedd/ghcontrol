@@ -1,0 +1,10 @@
+@reboot /home/USERNAME/log_event.sh "Started USERNAME computer"
+55 5 * * * /home/USERNAME/main_pump_on.sh
+0 6 * * * /home/USERNAME/half_acre_valve_on.sh
+0 7 * * * /home/USERNAME/hoophouse_valve_on.sh
+0 17 * * * /home/USERNAME/hoophouse_valve_off.sh
+0 17 * * * /home/USERNAME/irrigation_tank_valve_on.sh
+0 20 * * * /home/USERNAME/half_acre_valve_off.sh
+0 20 * * * /home/USERNAME/irrigation_tank_valve_off.sh
+30 20 * * * /home/USERNAME/main_pump_off.sh
+0 * * * * /home/USERNAME/get_status_8.sh
