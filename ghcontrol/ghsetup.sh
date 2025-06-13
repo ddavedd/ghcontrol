@@ -12,7 +12,7 @@ sudo raspi-conifg nonint do_i2c 0
 sudo raspi-config nonint do_onewire 0
 # Enable UART - SM3relind
 # Only do this if sm3 wont work
-# sudo raspi-config nonint do_serial_hw 0
+sudo raspi-config nonint do_serial_hw 0
 # Install sm3relind from git, not available in pip3 yet
 git clone https://github.com/SequentMicrosystems/3relind-rpi.git
 git clone https://github.com/SequentMicrosystems/8relind-rpi.git
@@ -30,3 +30,7 @@ sudo make install
 sudo adduser $USER dialout
 sudo chmod a+rw /dev/ttyACM0
 # To get arduino uno r4 wifi boards to work, need to go to board manager in arduino ide and update
+cd ~
+git init
+git remote add origin https://github.com/ddavedd/ghcontrol.git
+git pull origin main
