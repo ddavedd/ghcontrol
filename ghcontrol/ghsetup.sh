@@ -1,3 +1,4 @@
+#! /usr/bin/bash
 # Set up a virtual environment because python wants us to
 sudo apt-get install build-essential python3-pip python3-dev python3-smbus git
 python3 -m venv .gh_control_venv
