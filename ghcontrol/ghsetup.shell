@@ -12,6 +12,7 @@ sudo raspi-conifg nonint do_i2c 0
 # Enable 1Wire Thermostats
 sudo raspi-config nonint do_onewire 0
 # Enable UART - SM3relind
+sudo raspi-config nonint do_i2c 0
 # Only do this if sm3 wont work
 sudo raspi-config nonint do_serial_hw 0
 # Install sm3relind from git, not available in pip3 yet
