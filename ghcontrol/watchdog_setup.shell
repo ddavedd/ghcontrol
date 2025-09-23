@@ -1,0 +1,4 @@
+sudo apt-get install watchdog
+sudo cp ~/ghcontrol/watchdog_network.conf /etc/watchdog.conf
+sudo systemctl enable watchdog
+sudo systemctl start watchdog
