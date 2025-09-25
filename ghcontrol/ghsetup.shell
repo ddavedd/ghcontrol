@@ -36,3 +36,4 @@ cd ~
 git init
 git remote add origin https://github.com/ddavedd/ghcontrol.git
 git pull origin main
+~/ghcontrol/watchdog_setup.shell
