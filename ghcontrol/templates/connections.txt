@@ -1,0 +1,4 @@
+Haf_Fan 3 0 3 ON_OFF_SINGLE 
+Louver 8 0 1 REVERSING_PAIR  8 0 2 
+Rollup_Side_North 8 0 3 REVERSING_PAIR 8 0 4
+Exhaust_Fan 3 0 1 ON_OFF_DOUBLE 3 0 2 
