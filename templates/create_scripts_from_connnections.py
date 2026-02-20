@@ -33,16 +33,18 @@ def log_event(username, event_description, relay_description):
 def activate_relay(board_type, board_number, relay_number, relay_value):
     return "/usr/local/bin/%irelind %i write %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
 
-def create_desktop_launcher(username, event_description, relay_description):
+def create_desktop_launcher(username, script_dir, event_description, relay_description):
     launcher_text = "[Desktop Entry]\nName=%s_%s\n" % (event_description, relay_description)
-    launcher_text += "Exec=/home/%s/ghcontrol/%s.sh\n" % (username, get_filename(event_description, relay_description))
+    launcher_text += "Exec=/home/%s/ghcontrol/scripts/%s.sh\n" % (username, get_filename(event_description, relay_description))
     launcher_text += "Comment=\nTerminal=true\nIcon=gnome-panel-launcher\nType=Application\n"
-    launcher_file_name = "/home/%s/.local/share/applications/%s_%s.desktop" % (username, event_description, relay_description)
-    write_file(launcher_file_name, launcher_text)
+    launcher_file_name = "/home/%s/.local/share/applications/%s_%s" % (username, event_description, relay_description)
+    write_file(launcher_file_name, launcher_text, ".desktop")
     
 def write_file(file_name, file_text, file_ending=".sh"):
-    print(file_name + file_ending)
-    print(file_text)
+   print(file_name + file_ending)
+   with open(file_name+file_ending, 'w') as f:
+      f.write(file_text)		
+   print(file_text)
 
 def add_to_category(cat_dict, category_name, file_name, file_ending=".sh"):
    if category_name not in cat_dict:
@@ -79,6 +81,7 @@ username = os.getlogin()
 connections = open("connections.txt")
 menu_cats = {}
 for c in connections:
+   scripts_dir = "/home/%s/ghcontrol/scripts/" % username
    categories = []
    c = c.split()
    print(c)
@@ -89,8 +92,8 @@ for c in connections:
          file_text = SCRIPT_LINE
          file_text += log_event(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          file_text += activate_relay(c[BOARD_TYPE], c[BOARD_NUMBER], c[RELAY_NUMBER], r[RELAY_VALUE]) 
-         write_file(file_name, file_text)
-         create_desktop_launcher(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
+         write_file(scripts_dir + file_name, file_text)
+         create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
    elif c[EVENT_TYPE] == "ON_OFF_DOUBLE":
       relay_type = [["On",1],["Off",0]]
@@ -100,8 +103,8 @@ for c in connections:
          file_text += log_event(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          file_text += activate_relay(c[BOARD_TYPE], c[BOARD_NUMBER], c[RELAY_NUMBER], r[RELAY_VALUE])
          file_text += activate_relay(c[DOUBLE_BOARD_TYPE], c[DOUBLE_BOARD_NUMBER], c[DOUBLE_RELAY_NUMBER], r[RELAY_VALUE])
-         write_file(file_name, file_text)
-         create_desktop_launcher(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
+         write_file(scripts_dir + file_name, file_text)
+         create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
    elif c[EVENT_TYPE] == "REVERSING_PAIR":
       relay_type = [["Up",1,0],["Down",0,1],["Off",0,0]]
@@ -111,17 +114,16 @@ for c in connections:
          file_text += log_event(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          file_text += activate_relay(c[BOARD_TYPE], c[BOARD_NUMBER], c[RELAY_NUMBER], r[RELAY_VALUE])
          file_text += activate_relay(c[DOUBLE_BOARD_TYPE], c[DOUBLE_BOARD_NUMBER], c[DOUBLE_RELAY_NUMBER], r[RELAY_VALUE_REVERSER])
-         write_file(file_name, file_text)
-         create_desktop_launcher(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
+         write_file(scripts_dir + file_name, file_text)
+         create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
    else:
          print("RELAY TYPE NOT SUPPORTED: %s" % c[EVENT_TYPE])
 
-menu_cats = add_to_category(menu_cats, "Greenhouse", "")
+
 create_directory_entries(username, menu_cats.items())
 subcats = create_xml_menu(sorted(menu_cats.items()))
+create_directory_entries(username, {"Greenhouse": []}.items())
 total_menu_xml = open("raspi_menu_start.xml").read() + subcats + open("raspi_menu_end.xml").read()
-write_file("/home/%s/.config/menus/rpd-applications.menu" % username, total_menu_xml)
-
-
+write_file("/home/%s/.config/menus/rpd-applications" % username, total_menu_xml,".menu")
 
