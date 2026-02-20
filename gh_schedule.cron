@@ -1,0 +1,5 @@
+@reboot /home/USERNAME/ghcontrol/log_event.sh "Started USERNAME computer"
+0 0 * * * /home/USERNAME/ghcontrol/log_event.sh "USERNAME log"
+0 * * * * /usr/bin/sleep 5s && /home/USERNAME/ghcontrol/get_status_8.sh
+0 * * * * /usr/bin/sleep 10s && /home/USERNAME/ghcontrol/get_status_3.sh
+
