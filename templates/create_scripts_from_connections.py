@@ -12,7 +12,7 @@ DOUBLE_RELAY_NUMBER = 8
 RELAY_DESCRIPTION = 0
 RELAY_VALUE = 1
 RELAY_VALUE_REVERSER = 2
-SCRIPT_LINE = "!/usr/bin/bash\n"
+SCRIPT_LINE = "#! /usr/bin/bash\n"
 
 def create_menu_entry(username, menu_name):
     menu_entry = "[Desktop Entry]\nName=%s\nComment=\nIcon=folder\nType=Directory\n"
