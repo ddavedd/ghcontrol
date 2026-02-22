@@ -9,6 +9,9 @@ DOUBLE_BOARD_TYPE = 6
 DOUBLE_BOARD_NUMBER = 7
 DOUBLE_RELAY_NUMBER = 8
 
+BUTTON_NUMBER = 3
+BUTTON_PULL_UP_DOWN = 4
+
 RELAY_DESCRIPTION = 0
 RELAY_VALUE = 1
 RELAY_VALUE_REVERSER = 2
@@ -77,6 +80,11 @@ def create_directory_entries(username, cat_dict):
       write_file(directory_entry_location + k, directory_text,".directory")
 
 username = os.getlogin()
+buttons_setup_text = ""
+buttons_function_text = "import os"
+buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library"
+buttons_function_text += "GPIO.setwarnings(False)"
+buttons_function_text += "GPIO.setmode(GPIO.BOARD)"
 
 connections = open("connections.txt")
 menu_cats = {}
@@ -91,7 +99,8 @@ for c in connections:
          file_name = get_filename(c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          file_text = SCRIPT_LINE
          file_text += log_event(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         file_text += activate_relay(c[BOARD_TYPE], c[BOARD_NUMBER], c[RELAY_NUMBER], r[RELAY_VALUE]) 
+         file_text += activate_relay(c[BOARD_TYPE
+         ], c[BOARD_NUMBER], c[RELAY_NUMBER], r[RELAY_VALUE]) 
          write_file(scripts_dir + file_name, file_text)
          create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
@@ -117,8 +126,22 @@ for c in connections:
          write_file(scripts_dir + file_name, file_text)
          create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
+   elif c[EVENT_TYPE] == "PUSH_BUTTON":
+      buttons_function_text += "def %s_button_callback(channel):\n" % c[BUTTON_NUMBER]
+      buttons_function_text += "\tprint(\"%s button pressed\")\n" % c[BUTTON_NUMBER]
+      buttons_function_text += "\tos.system(\"%s.sh\")\n" % (scripts_dir + c[EVENT_DESCRIPTION])
+      buttons_setup_text += "GPIO.setup(%s, GPIO.IN, pull_up_down=GPIO.%s)\n" % (c[BUTTON_NUMBER], c[BUTTON_PULL_UP_DOWN])
+      buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=%s_button_callback)\n" % (c[BUTTON_NUMBER], c[BUTTON_NUMBER])
+       
+      #file_name = get_filename(c[EVENT_DESCRIPTION], "Pushed")
+      #file_text = SCRIPT_LINE
+      #file_text += log_event(username, c[EVENT_DESCRIPTION], "Pushed")
+      #write_file(scripts_dir + file_name, file_text)
    else:
          print("RELAY TYPE NOT SUPPORTED: %s" % c[EVENT_TYPE])
+end_text = "message = input(\"Press Enter to Quit\\n\")\n"
+end_text += "GPIO.cleanup()\n"
+print(buttons_function_text + buttons_setup_text + end_text)
 
 
 create_directory_entries(username, menu_cats.items())
