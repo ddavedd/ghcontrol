@@ -17,32 +17,34 @@ RELAY_VALUE = 1
 RELAY_VALUE_REVERSER = 2
 SCRIPT_LINE = "#! /usr/bin/bash\n"
 
+DEBOUNCE_TIME_MS = 200  # 200 milliseconds
+
 def create_menu_entry(username, menu_name):
     menu_entry = "[Desktop Entry]\nName=%s\nComment=\nIcon=folder\nType=Directory\n"
     menu_filename = "/home/%s/.local/share/desktop-directories/%s.directory" % (username, menu_name)
     write_file(menu_filename, menu_entry)
 
 def create_menus(username, names):
-    create_menu_entry(username, "Greenhouse")    
-    for name in names:
-        create_menu_entry(username, name)
-        
+   create_menu_entry(username, "Greenhouse")
+   for name in names:
+      create_menu_entry(username, name)
+
 def get_filename(event_description, relay_description):
-    return "%s_%s" % (event_description, relay_description)
+   return "%s_%s" % (event_description, relay_description)
 
 def log_event(username, event_description, relay_description):
-    return "/home/%s/ghcontrol/log_event.sh \"%s %s\"\n" % (username, event_description, relay_description)
+   return "/home/%s/ghcontrol/log_event.sh \"%s %s\"\n" % (username, event_description, relay_description)
 
 def activate_relay(board_type, board_number, relay_number, relay_value):
-    return "/usr/local/bin/%irelind %i write %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
+   return "/usr/local/bin/%irelind %i write %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
 
 def create_desktop_launcher(username, script_dir, event_description, relay_description):
-    launcher_text = "[Desktop Entry]\nName=%s_%s\n" % (event_description, relay_description)
-    launcher_text += "Exec=/home/%s/ghcontrol/scripts/%s.sh\n" % (username, get_filename(event_description, relay_description))
-    launcher_text += "Comment=\nTerminal=true\nIcon=gnome-panel-launcher\nType=Application\n"
-    launcher_file_name = "/home/%s/.local/share/applications/%s_%s" % (username, event_description, relay_description)
-    write_file(launcher_file_name, launcher_text, ".desktop")
-    
+   launcher_text = "[Desktop Entry]\nName=%s_%s\n" % (event_description, relay_description)
+   launcher_text += "Exec=/home/%s/ghcontrol/scripts/%s.sh\n" % (username, get_filename(event_description, relay_description))
+   launcher_text += "Comment=\nTerminal=true\nIcon=gnome-panel-launcher\nType=Application\n"
+   launcher_file_name = "/home/%s/.local/share/applications/%s_%s" % (username, event_description, relay_description)
+   write_file(launcher_file_name, launcher_text, ".desktop")
+
 def write_file(file_name, file_text, file_ending=".sh"):
    print(file_name + file_ending)
    with open(file_name+file_ending, 'w') as f:
@@ -72,7 +74,7 @@ def create_xml_menu(cat_dict):
       menu_text += "\t</Layout>\n</Menu>\n"
       total_menu += menu_text
    return total_menu
-      
+
 def create_directory_entries(username, cat_dict):
    directory_entry_location = "/home/%s/.local/share/desktop-directories/" % username
    for k,v in cat_dict:
@@ -81,10 +83,10 @@ def create_directory_entries(username, cat_dict):
 
 username = os.getlogin()
 buttons_setup_text = ""
-buttons_function_text = "import os"
-buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library"
-buttons_function_text += "GPIO.setwarnings(False)"
-buttons_function_text += "GPIO.setmode(GPIO.BOARD)"
+buttons_function_text = "import os\n"
+buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library\n"
+buttons_function_text += "GPIO.setwarnings(False)\n"
+buttons_function_text += "GPIO.setmode(GPIO.BOARD)\n\n"
 
 connections = open("connections.txt")
 menu_cats = {}
@@ -129,9 +131,9 @@ for c in connections:
    elif c[EVENT_TYPE] == "PUSH_BUTTON":
       buttons_function_text += "def %s_button_callback(channel):\n" % c[BUTTON_NUMBER]
       buttons_function_text += "\tprint(\"%s button pressed\")\n" % c[BUTTON_NUMBER]
-      buttons_function_text += "\tos.system(\"%s.sh\")\n" % (scripts_dir + c[EVENT_DESCRIPTION])
+      buttons_function_text += "\tos.system(\"%s.sh\")\n\n" % (scripts_dir + c[EVENT_DESCRIPTION])
       buttons_setup_text += "GPIO.setup(%s, GPIO.IN, pull_up_down=GPIO.%s)\n" % (c[BUTTON_NUMBER], c[BUTTON_PULL_UP_DOWN])
-      buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=%s_button_callback)\n" % (c[BUTTON_NUMBER], c[BUTTON_NUMBER])
+      buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=%s_button_callback, bouncetime=%i)\n\n" % (c[BUTTON_NUMBER], c[BUTTON_NUMBER], DEBOUNCE_TIME_MS)
        
       #file_name = get_filename(c[EVENT_DESCRIPTION], "Pushed")
       #file_text = SCRIPT_LINE
@@ -141,8 +143,7 @@ for c in connections:
          print("RELAY TYPE NOT SUPPORTED: %s" % c[EVENT_TYPE])
 end_text = "message = input(\"Press Enter to Quit\\n\")\n"
 end_text += "GPIO.cleanup()\n"
-print(buttons_function_text + buttons_setup_text + end_text)
-
+write_file("buttons_setup", buttons_function_text + buttons_setup_text + end_text, ".py")
 
 create_directory_entries(username, menu_cats.items())
 subcats = create_xml_menu(sorted(menu_cats.items()))
