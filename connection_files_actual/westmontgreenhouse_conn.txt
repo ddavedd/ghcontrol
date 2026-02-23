@@ -9,8 +9,8 @@ Water_2 Water 8 1 7 ON_OFF_SINGLE
 Water_3 Water 8 1 8 ON_OFF_SINGLE
 Heater_East_Enable Heaters 3 0 1 ON_OFF_SINGLE
 Heater_West_Enable Heaters 3 1 1 ON_OFF_SINGLE
-Heater_East_Tstat Heaters 8 1 1 ON_OFF_SINGLE
-Heater_West_Tstat Heaters 8 1 2 ON_OFF_SINGLE
+Heater_East_Tstat Heaters 8 1 2 ON_OFF_SINGLE
+Heater_West_Tstat Heaters 8 1 1 ON_OFF_SINGLE
 LouverLinear 8 0 3 REVERSING_PAIR 8 0 4
 Rollup_Side_North_Down R R 10 PUD_DOWN PUSH_BUTTON
 Rollup_Side_North_Up R R 11 PUD_DOWN PUSH_BUTTON
