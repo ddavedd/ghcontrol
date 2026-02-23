@@ -129,11 +129,11 @@ for c in connections:
          create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
          menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
    elif c[EVENT_TYPE] == "PUSH_BUTTON":
-      buttons_function_text += "def %s_button_callback(channel):\n" % c[BUTTON_NUMBER]
+      buttons_function_text += "def button_callback_%s(channel):\n" % c[BUTTON_NUMBER]
       buttons_function_text += "\tprint(\"%s button pressed\")\n" % c[BUTTON_NUMBER]
       buttons_function_text += "\tos.system(\"%s.sh\")\n\n" % (scripts_dir + c[EVENT_DESCRIPTION])
       buttons_setup_text += "GPIO.setup(%s, GPIO.IN, pull_up_down=GPIO.%s)\n" % (c[BUTTON_NUMBER], c[BUTTON_PULL_UP_DOWN])
-      buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=%s_button_callback, bouncetime=%i)\n\n" % (c[BUTTON_NUMBER], c[BUTTON_NUMBER], DEBOUNCE_TIME_MS)
+      buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=button_callback_%s, bouncetime=%i)\n\n" % (c[BUTTON_NUMBER], c[BUTTON_NUMBER], DEBOUNCE_TIME_MS)
        
       #file_name = get_filename(c[EVENT_DESCRIPTION], "Pushed")
       #file_text = SCRIPT_LINE
