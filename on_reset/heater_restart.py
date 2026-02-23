@@ -3,7 +3,7 @@ import os
 from os.path import isfile, join
 username = os.getlogin()
 heater_on_scripts = []
-with open("/home/%s/ghcontrol/heater_enable_on_restart.txt" % username) as f:
+with open("/home/%s/ghcontrol/on_reset/heater_enable_on_restart.txt" % username) as f:
    enable = int(f.read())
    if enable == 1:
       scripts_directory = "/home/%s/ghcontrol/scripts" % username
