@@ -33,6 +33,8 @@ sudo adduser $USER dialout
 sudo chmod a+rw /dev/ttyACM0
 # To get arduino uno r4 wifi boards to work, need to go to board manager in arduino ide and update
 cd ~
+mkdir ghcontrol
+cd ghcontrol
 git init
 git remote add origin https://github.com/ddavedd/ghcontrol.git
 git pull origin main
