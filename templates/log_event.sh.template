@@ -1,2 +1,2 @@
 #! /usr/bin/bash
-echo $1 $(date +"%F %T %Z") >> /home/farmerlaptop1/ghcontrol/logs/$(date +"%F").farmerlaptop1.log
+echo $1 $(date +"%F %T %Z") >> /home/USERNAME/ghcontrol/logs/$(date +"%F").USERNAME.log
