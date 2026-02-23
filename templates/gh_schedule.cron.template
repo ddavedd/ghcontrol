@@ -1,0 +1,6 @@
+@reboot /home/USERNAME/ghcontrol/log_event.sh "Started USERNAME computer"
+@reboot sleep 10s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/heater_restart.py
+0 0 * * * /home/USERNAME/ghcontrol/scripts/log_event.sh "farmerlaptop1 log"
+0 * * * * /usr/bin/sleep 5s && /home/USERNAME/ghcontrol/scripts/get_status_8.sh
+0 * * * * /usr/bin/sleep 10s && /home/USERNAME/ghcontrol/scripts/get_status_3.sh
+

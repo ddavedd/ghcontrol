@@ -37,5 +37,5 @@ git init
 git remote add origin https://github.com/ddavedd/ghcontrol.git
 git pull origin main
 cd ~/ghcontrol
-~/ghcontrol/username_replace.shell
-~/ghcontrol/watchdog_setup.shell
+~/ghcontrol/run_at_setup/username_replace.shell
+~/ghcontrol/run_at_setup/watchdog_setup.shell

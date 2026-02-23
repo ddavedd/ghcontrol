@@ -17,8 +17,7 @@ Rollup_Side_North_Stop R R 12 PUD_DOWN PUSH_BUTTON
 Rollup_Side_South_Down R R 13 PUD_DOWN PUSH_BUTTON
 Rollup_Side_South_Up R R 14 PUD_DOWN PUSH_BUTTON
 Rollup_Side_South_Stop R R 15 PUD_DOWN PUSH_BUTTON
-TempSensor1 longid R 4 TEMPERATURE_SENSOR
-TempSensor2 longid R 4 TEMPERATURE_SENSOR 
-PressureSensor1 A A A01 PRESSURE_SENSOR
-FlowMeter1 A A 2 FLOW_METER
-
+TempSensor1 longid R R 4 TEMPERATURE_SENSOR
+TempSensor2 longid R R 4 TEMPERATURE_SENSOR 
+PressureSensor1 A A A A01 PRESSURE_SENSOR
+FlowMeter1 A A A 2 FLOW_METER

@@ -143,7 +143,7 @@ for c in connections:
          print("RELAY TYPE NOT SUPPORTED: %s" % c[EVENT_TYPE])
 end_text = "message = input(\"Press Enter to Quit\\n\")\n"
 end_text += "GPIO.cleanup()\n"
-write_file("buttons_setup", buttons_function_text + buttons_setup_text + end_text, ".py")
+write_file("/home/%s/ghcontrol/on_reset/buttons_setup" % username, buttons_function_text + buttons_setup_text + end_text, ".py")
 
 create_directory_entries(username, menu_cats.items())
 subcats = create_xml_menu(sorted(menu_cats.items()))
