@@ -33,7 +33,7 @@ def get_filename(event_description, relay_description):
    return "%s_%s" % (event_description, relay_description)
 
 def log_event(username, event_description, relay_description):
-   return "/home/%s/ghcontrol/log_event.sh \"%s %s\"\n" % (username, event_description, relay_description)
+   return "/home/%s/ghcontrol/scripts/log_event.sh \"%s %s\"\n" % (username, event_description, relay_description)
 
 def activate_relay(board_type, board_number, relay_number, relay_value):
    return "/usr/local/bin/%irelind %i write %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
