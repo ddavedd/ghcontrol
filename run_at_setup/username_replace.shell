@@ -1,6 +1,4 @@
-sed "s/USERNAME/${USER}/g" /home/${USER}/ghcontrol/templates/get_status_3.sh.template > /home/${USER}/ghcontrol/scripts/get_status_3.sh
-sed "s/USERNAME/${USER}/g" /home/${USER}/ghcontrol/templates/get_status_8.sh.template > /home/${USER}/ghcontrol/scripts/get_status_8.sh
-sed "s/USERNAME/${USER}/g" /home/${USER}/ghcontrol/templates/log_event.sh.template > /home/${USER}/ghcontrol/scripts/log_event.sh
+sed "s/USERNAME/${USER}/g" /home/${USER}/ghcontrol/templates/log_event.sh.template > /home/${USER}/ghcontrol/scripts/log_event
 sed "s/USERNAME/${USER}/g" /home/${USER}/ghcontrol/templates/gh_schedule.cron.template > /home/${USER}/ghcontrol/gh_schedule.cron 
 sed "s/USERNAME/${USER}/g" /home/${USER}/ghcontrol/templates/watchdog_setup.shell.template > /home/${USER}/ghcontrol/run_at_setup/watchdog_setup.shell
 chmod +x /home/${USER}/ghcontrol/scripts/*.sh
