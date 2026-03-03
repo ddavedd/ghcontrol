@@ -88,7 +88,7 @@ buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO lib
 buttons_function_text += "GPIO.setwarnings(False)\n"
 buttons_function_text += "GPIO.setmode(GPIO.BOARD)\n\n"
 
-connections = open("connections.txt")
+connections = open("/home/%s/ghcontrol/templates/connections.txt" % username)
 menu_cats = {}
 for c in connections:
    scripts_dir = "/home/%s/ghcontrol/scripts/" % username
@@ -148,6 +148,6 @@ write_file("/home/%s/ghcontrol/on_reset/buttons_setup" % username, buttons_funct
 create_directory_entries(username, menu_cats.items())
 subcats = create_xml_menu(sorted(menu_cats.items()))
 create_directory_entries(username, {"Greenhouse": []}.items())
-total_menu_xml = open("raspi_menu_start.xml").read() + subcats + open("raspi_menu_end.xml").read()
+total_menu_xml = open("/home/%s/ghcontrol/templates/raspi_menu_start.xml" % username).read() + subcats + open("/home/%s/ghcontrol/templates/raspi_menu_end.xml" % username).read()
 write_file("/home/%s/.config/menus/rpd-applications" % username, total_menu_xml,".menu")
 
