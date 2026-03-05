@@ -12,14 +12,12 @@ def read_temp_raw(device_file):
 
 def read_temp(device_file):
    lines = read_temp_raw(device_file)
-   print(lines)
    if lines[0].strip()[-3:] != 'YES':
-      time.sleep(WAIT_DELAY)
-      lines = read_temp_raw(device_file)
-      print(lines)
       equals_pos = lines[1].find('t=')
+      print(equals_pos)
       if equals_pos != -1:
          temp_string = lines[1][equals_pos+2:]
+         print(temp_string)
          temp_c = float(temp_string) / 1000.0
          temp_f = temp_c * 9.0 / 5.0 + 32.0
          return temp_c, temp_f
