@@ -1,6 +1,7 @@
 import os
 import glob
 import time
+WAIT_DELAY = .2
 
 def read_temp_raw(device_file):
    print(device_file)
@@ -12,6 +13,8 @@ def read_temp_raw(device_file):
 def read_temp(device_file):
    lines = read_temp_raw(device_file)
    if lines[0].strip()[-3:] != 'YES':
+      time.sleep(WAIT_DELAY)
+      lines = read_temp_raw(device_file)
       equals_pos = lines[1].find('t=')
       if equals_pos != -1:
          temp_string = lines[1][equals_pos+2:]
