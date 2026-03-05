@@ -2,13 +2,8 @@ import os
 import glob
 import time
 
-base_dir = '/sys/bus/w1/devices/'
-device_files = []
-if len(glob.glob(base_dir+'28*')) > 0:
-   for therm in glob.glob(base_dir + '28*'):
-      device_files.append(therm + '/w1_slave')
-
 def read_temp_raw(device_file):
+   print(device_file)
    lines = ""
    with open(device_file, 'r') as f:
       lines = f.readlines()
@@ -25,7 +20,14 @@ def read_temp(device_file):
          return temp_c, temp_f
    # If things go wrong
    return -100.0,-100.0
-   
+
+base_dir = '/sys/bus/w1/devices/'
+device_files = []
+if len(glob.glob(base_dir+'28*')) > 0:
+   for therm in glob.glob(base_dir + '28*'):
+      device_files.append(therm + '/w1_slave')
+
+
 if len(device_files) > 0:
    while True:
       for device_file in device_files:
