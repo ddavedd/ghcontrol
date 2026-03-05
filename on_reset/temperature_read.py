@@ -43,6 +43,7 @@ if len(device_files) > 0:
       line += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
       for device_file in device_files:
          line += " %.1f" % read_temp(device_file)
+      line += "\n"
       with open(filename, WRITE_APPEND) as f:
          f.write(line)
       time.sleep(TIME_BETWEEN_READINGS)
