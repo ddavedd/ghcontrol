@@ -12,7 +12,7 @@ def read_temp_raw(device_file):
 
 def read_temp(device_file):
    lines = read_temp_raw(device_file)
-   print(lines)
+   print(lines[0].strip()[-3:])
    if lines[0].strip()[-3:] != 'YES':
       equals_pos = lines[1].find('t=')
       print(equals_pos)
