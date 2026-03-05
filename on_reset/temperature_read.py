@@ -39,7 +39,7 @@ if len(glob.glob(base_dir+'28*')) > 0:
 if len(device_files) > 0:
    while True:
       line = ""
-      filename = "/home/%s/ghcontrol/temperature_files/temp_%s.txt" % (username, datetime.datetime.now().strftime("%Y-%m-%d")
+      filename = "/home/%s/ghcontrol/temperature_files/temp_%s.txt" % (username, datetime.datetime.now().strftime("%Y-%m-%d"))
       line += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
       for device_file in device_files:
          line += " %.1f" % read_temp(device_file)
