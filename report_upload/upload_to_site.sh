@@ -8,6 +8,8 @@ user thefarmwestmontcom $FARM_PW
 cd gh
 mkdir 2026
 cd 2026
+mkdir ${USER}
+cd ${USER}
 ls
 bye
 END_SCRIPT
