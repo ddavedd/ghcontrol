@@ -3,8 +3,10 @@ import matplotlib.dates as md
 import numpy as np
 import datetime
 import dateutil
+import sys
 
-with open('test.txt','r') as f:
+print(sys.argv[1])
+with open(sys.argv[1],'r') as f:
    lines = f.readlines()
 
 xvals = []
@@ -31,14 +33,17 @@ ax.plot(x,y,label="Temperature")
 x_low = x[0].replace(hour=0,minute=0,second=0)
 x_high = x[0].replace(hour=23,minute=59,second=59)
 ax.set_xlim(x_low,x_high)
-xloc = md.HourLocator(interval=2)
+xloc = md.HourLocator(interval=3)
+xloc_minor = md.HourLocator(interval=1)
 major_format = md.DateFormatter('%H:%M')
 ax.xaxis.set_major_formatter(major_format)
 ax.xaxis.set_major_locator(xloc)
+ax.xaxis.set_minor_locator(xloc_minor)
 fig.autofmt_xdate()
 # Y axis
 ax.set_ylim(25,100)
 # Labels and legend
+ax.grid(visible=True)
 ax.set_title("Temperature %s" % current_date_string)
 ax.set_xlabel("Time")
 ax.set_ylabel("Temperature Fahrenheit")
