@@ -5,7 +5,11 @@ import datetime
 import dateutil
 import sys
 
-print(sys.argv[1])
+DPI_PNG = 150
+if len(sys.argv)>2:
+   DPI_PNG = int(sys.argv[2])
+
+print(sys.argv[1], )
 with open(sys.argv[1],'r') as f:
    lines = f.readlines()
 
@@ -49,4 +53,4 @@ ax.set_xlabel("Time")
 ax.set_ylabel("Temperature Fahrenheit")
 ax.legend()
 # Save image
-fig.savefig('%s.png' % current_date_string)
+fig.savefig('png/%s.png' % current_date_string, dpi=DPI_PNG)
