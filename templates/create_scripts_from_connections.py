@@ -88,7 +88,7 @@ buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO lib
 buttons_function_text += "GPIO.setwarnings(False)\n"
 buttons_function_text += "GPIO.setmode(GPIO.BOARD)\n\n"
 
-connections = open("/home/%s/ghcontrol/templates/connections.txt" % username)
+connections = open("/home/%s/ghcontrol/connection_files_actual/%s.connections" % (username,username))
 menu_cats = {}
 for c in connections:
    scripts_dir = "/home/%s/ghcontrol/scripts/" % username
