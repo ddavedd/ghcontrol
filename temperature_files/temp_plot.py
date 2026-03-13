@@ -1,11 +1,14 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as md
 from matplotlib.patches import Rectangle
+from matplotlib.ticker import MultipleLocator
 import numpy as np
 import datetime
 import dateutil
 import sys
+import os
 
+username = os.getlogin()
 ALPHA = .4
 BOX_HEIGHT = 5
 HEATER_TEMP = 25
@@ -48,64 +51,94 @@ if len(sys.argv)>2:
 print(sys.argv[1])
 with open(sys.argv[1],'r') as f:
    lines = f.readlines()
-sides = []
-with open(sys.argv[3],'r') as f:
-   sides = f.readlines()
+#sides = []
+#with open(sys.argv[3],'r') as f:
+#   sides = f.readlines()
+
 xvals = []
-yvals = []
+# Make a matrix of the y values (temps) + at the end write the average
+number_samples_plus_average = len(lines[0].split())-2+1
+yvals = [[] for x in range(number_samples_plus_average)]
+print(yvals)
 for l in lines:
    sl = l.split()
    if len(sl) >= 3 :
       datetimeval = dateutil.parser.parse(sl[0] + " " + sl[1])
       xvals.append(datetimeval)
-      yvals.append(float(sl[2]))
+      average = 0.0
+      for i in range(number_samples_plus_average - 1):
+         value = float(sl[2+i])
+         yvals[i].append(value)
+         average += value
+      average = average / (number_samples_plus_average - 1)
+      yvals[-1].append(float("%.1f" % average))
+print(yvals)
 
-
-sx = []
-sy = []
-for s in sides:
-   ss = s.split()
-   if len(ss) == 3:
-      datetimeval = dateutil.parser.parse(ss[0] + " " + ss[1])
-      sx.append(datetimeval)
-      sy.append(float(ss[2]))
+#sx = []
+#sy = []
+#for s in sides:
+#   ss = s.split()
+#   if len(ss) == 3:
+##      datetimeval = dateutil.parser.parse(ss[0] + " " + ss[1])
+#      sx.append(datetimeval)
+#      sy.append(float(ss[2]))
       
 #print(xvals)
 #print(yvals)
-x = np.array(xvals)
-y = np.array(yvals)
-sx = np.array(sx)
-sy = np.array(sy)
+#x = np.array(xvals)
+#y = np.array(yvals)
+#sx = np.array(sx)
+#sy = np.array(sy)
 
-print(x)
-print(y)
-print(sx)
-print(sy)
+#print(x)
+#print(y)
+#print(sx)
+#print(sy)
 
 current_date_string = lines[0].split()[0]
 fig, ax = plt.subplots()
-ax.plot(x,y,label="Temperature")
+for i in range(len(yvals)):
+   # For individual temperature sensors
+   if i < len(yvals)-1:
+      alpha = .25
+      color = "gray"
+      linewidth = 1
+      label = None
+   # For the average temperature
+   else:
+      alpha = 1.0
+      color = "blue"
+      linewidth = 1
+      label="Average Temp"
+   ax.plot(xvals,yvals[i],label=label,alpha=alpha, color=color, linewidth=linewidth)
+# ax.plot(xvals,yvals[0],label="Temperature")
 # X axis
 # Setting the datetime for start and end of day
-x_low = x[0].replace(hour=0,minute=0,second=0)
-x_high = x[0].replace(hour=23,minute=59,second=59)
+x_low = xvals[0].replace(hour=0,minute=0,second=0)
+x_high = x_low + datetime.timedelta(days=1)
 ax.set_xlim(x_low,x_high)
-xloc = md.HourLocator(interval=3)
+xloc = md.HourLocator(interval=2)
 xloc_minor = md.HourLocator(interval=1)
-major_format = md.DateFormatter('%H:%M')
+major_format = md.DateFormatter('%I %p')
 ax.xaxis.set_major_formatter(major_format)
 ax.xaxis.set_major_locator(xloc)
 ax.xaxis.set_minor_locator(xloc_minor)
-fig.autofmt_xdate()
-ax2 = ax.twinx()
-ax2.set_ylim(0,100)
-ax2.plot(sx,sy,label="Rollup Sides % Open",color="green")
+ax.tick_params(which="major",length=10)
+ax.tick_params(which="minor",length=4)
+fig.autofmt_xdate(rotation=45,ha='center')
+ax.yaxis.set_major_locator(MultipleLocator(10))
+ax.yaxis.set_minor_locator(MultipleLocator(5))
+#ax2 = ax.twinx()
+#ax2.set_ylim(0,100)
+#ax2.plot(sx,sy,label="Rollup Sides % Open",color="green")
 # Y axis
-ax.set_ylim(25,100)
+minimum = min([min(y) for y in yvals])
+maximum = max([max(y) for y in yvals])
+ax.set_ylim(minimum,maximum)
 # Labels and legend
 ax.grid(visible=True)
-ax.set_title("Temperature %s" % current_date_string)
-ax.set_xlabel("Time")
+ax.set_title(username)
+ax.set_xlabel(current_date_string)
 ax.set_ylabel("Temperature Fahrenheit")
 ax.legend()
 
@@ -113,14 +146,12 @@ times = []
 for i in range(0,29):
    times.append(x_low + datetime.timedelta(hours=i))
 
-#draw_rect(ax,x_low, x_high,30,40,"red",.5)
-#draw_rect(ax,x_low,x_high,35,45,"orange", .5)
 rs = []
 rs.append(draw_heater(ax,times))
 rs.append(draw_exhaust_fan(ax,times[1:]))
 rs.append(draw_haf_fan(ax,times[2:]))
 rs.append(draw_top_fan(ax,times))
-ax2.legend(handles=rs)
+#ax.legend(handles=rs)
 print([r.get_label() for r in rs])
 # Save image
 fig.savefig('png/%s.png' % current_date_string, dpi=DPI_PNG)

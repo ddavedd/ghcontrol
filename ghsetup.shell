@@ -37,6 +37,8 @@ mkdir menus
 cd ~/.local/share
 mkdir desktop-directories
 cd ~
+# REmove directories we won't use with our Pi'
+rmdir Documents Music Pictures Public Templates Video
 mkdir ghcontrol
 cd ghcontrol
 git init
