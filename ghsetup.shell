@@ -8,7 +8,7 @@ sudo .gh_control_venv/bin/pip3 install SM8relind
 # Enbale SSH - Login from remote computer for troubleshooting
 sudo raspi-config nonint do_ssh 0
 # Enable I2C - SM3relind
-sudo raspi-conifg nonint do_i2c 0
+sudo raspi-config nonint do_i2c 0
 # Enable 1Wire Thermostats
 sudo raspi-config nonint do_onewire 0
 # Enable UART - SM3relind
