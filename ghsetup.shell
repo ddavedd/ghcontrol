@@ -45,8 +45,7 @@ git init
 git remote add origin https://github.com/ddavedd/ghcontrol.git
 git pull origin main
 cd ~/ghcontrol
-cd ~
-ln -s ghcontrol/.pass_msmtp .pass_msmtp
-ln -s ghcontrol/.msmtprc .msmtprc
+ln -s /home/${USER}/ghcontrol/.pass_msmtp /home/${USER}.pass_msmtp
+ln -s /home/${USER}/ghcontrol/.msmtprc /home/${USER}.msmtprc
 ~/ghcontrol/run_at_setup/setup_scripts.shell
 ~/ghcontrol/run_at_setup/watchdog_setup.shell
