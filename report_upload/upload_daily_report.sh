@@ -1,7 +1,7 @@
 #!/bin/bash
 FARM_PW=$(cat /home/$USER/ghcontrol/report_upload/.ftp_pass)
-CURRENT_DATE=$(date +%Y-%m-%d)
-cd /home/${USER}/ghcontrol/report_upload
+LATEST_LOG=$(ls -t /home/${USER}/ghcontrol/logs/ | head -1)
+LATEST_PNG=$(ls -t /home/${USER}/ghcontrol/temperature_files/png/ | head -1)
 ftp -nvi ftp.thefarmwestmont.com << END_SCRIPT
 user thefarmwestmontcom $FARM_PW
 cd gh
@@ -9,15 +9,14 @@ mkdir 2026
 cd 2026
 mkdir ${USER}
 cd ${USER}
-lcd graphs
 mkdir graphs
 cd graphs
-put $CURRENT_DATE.png
+lcd /home/${USER}/ghcontrol/temperature_files/png/
+put $LATEST_PNG
 cd ..
-lcd ..
-lcd reports
+lcd /home/${USER}/ghcontrol/logs/
 mkdir reports
 cd reports
-put $CURRENT_DATE.report
+put $LATEST_LOG
 bye
 END_SCRIPT
