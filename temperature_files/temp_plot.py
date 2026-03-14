@@ -74,6 +74,22 @@ for l in lines:
       yvals[-1].append(float("%.1f" % average))
 print(yvals)
 
+#MOVING_AVERAGE_SIZE = 500
+#averages = yvals[-1]
+#moving_average_list = []
+#average_smooth = []
+#for a in averages:
+#   moving_average_list.append(a)
+#   if len(moving_average_list)>MOVING_AVERAGE_SIZE:
+#      moving_average_list = moving_average_list[1:]
+#   smooth_value = sum(moving_average_list)/len(moving_average_list)
+#   if len(moving_average_list) >= int(MOVING_AVERAGE_SIZE/2):
+#      average_smooth.append(smooth_value)
+#   #print(moving_average_list)
+#for i in range(int(MOVING_AVERAGE_SIZE/2)-1):
+#   average_smooth.append(smooth_value)
+#yvals.append(average_smooth)
+   
 #sx = []
 #sy = []
 #for s in sides:
@@ -109,7 +125,12 @@ for i in range(len(yvals)):
       alpha = 1.0
       color = "blue"
       linewidth = 1
-      label="Average Temp"
+      label = "Average Temp"
+#   else:
+#      alpha = .80
+#      color = "green"
+#      linewidth = 1
+#      label="Smooth Average"
    ax.plot(xvals,yvals[i],label=label,alpha=alpha, color=color, linewidth=linewidth)
 # ax.plot(xvals,yvals[0],label="Temperature")
 # X axis
