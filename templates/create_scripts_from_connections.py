@@ -1,16 +1,16 @@
 import os
-EVENT_DESCRIPTION = 0
-EVENT_CATEGORY = 1
-BOARD_TYPE = 2
-BOARD_NUMBER = 3
-RELAY_NUMBER = 4
-EVENT_TYPE = 5
-DOUBLE_BOARD_TYPE = 6
-DOUBLE_BOARD_NUMBER = 7
-DOUBLE_RELAY_NUMBER = 8
+#EVENT_DESCRIPTION = 0
+#EVENT_CATEGORY = 1
+#BOARD_TYPE = 2
+#BOARD_NUMBER = 3
+#RELAY_NUMBER = 4
+#EVENT_TYPE = 5
+#DOUBLE_BOARD_TYPE = 6
+#DOUBLE_BOARD_NUMBER = 7
+#DOUBLE_RELAY_NUMBER = 8
 
-BUTTON_NUMBER = 3
-BUTTON_PULL_UP_DOWN = 4
+#BUTTON_NUMBER = 3
+#BUTTON_PULL_UP_DOWN = 4
 
 RELAY_DESCRIPTION = 0
 RELAY_VALUE = 1
@@ -58,7 +58,6 @@ def add_to_category(cat_dict, category_name, file_name, file_ending=".sh"):
    return cat_dict
 
 def create_xml_menu(cat_dict):
-
    #import xml.etree.ElementTree as ET
    total_menu = ""
    for k,v in cat_dict:
@@ -88,58 +87,78 @@ buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO lib
 buttons_function_text += "GPIO.setwarnings(False)\n"
 buttons_function_text += "GPIO.setmode(GPIO.BOARD)\n\n"
 
-connections = open("/home/%s/ghcontrol/connection_files_actual/%s.connections" % (username,username))
 menu_cats = {}
-for c in connections:
-   scripts_dir = "/home/%s/ghcontrol/scripts/" % username
-   categories = []
-   c = c.split()
-   print(c)
-   if c[EVENT_TYPE] == "ON_OFF_SINGLE":
-      relay_type = [["On",1],["Off",0]]
-      for r in relay_type:
-         file_name = get_filename(c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         file_text = SCRIPT_LINE
-         file_text += log_event(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         file_text += activate_relay(c[BOARD_TYPE
-         ], c[BOARD_NUMBER], c[RELAY_NUMBER], r[RELAY_VALUE]) 
-         write_file(scripts_dir + file_name, file_text)
-         create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
-   elif c[EVENT_TYPE] == "ON_OFF_DOUBLE":
-      relay_type = [["On",1],["Off",0]]
-      for r in relay_type:
-         file_name = get_filename(c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         file_text = SCRIPT_LINE
-         file_text += log_event(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         file_text += activate_relay(c[BOARD_TYPE], c[BOARD_NUMBER], c[RELAY_NUMBER], r[RELAY_VALUE])
-         file_text += activate_relay(c[DOUBLE_BOARD_TYPE], c[DOUBLE_BOARD_NUMBER], c[DOUBLE_RELAY_NUMBER], r[RELAY_VALUE])
-         write_file(scripts_dir + file_name, file_text)
-         create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
-   elif c[EVENT_TYPE] == "REVERSING_PAIR":
-      relay_type = [["Up",1,0],["Down",0,1],["Off",0,0]]
-      for r in relay_type:
-         file_name = get_filename(c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         file_text = SCRIPT_LINE
-         file_text += log_event(username, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         file_text += activate_relay(c[BOARD_TYPE], c[BOARD_NUMBER], c[RELAY_NUMBER], r[RELAY_VALUE])
-         file_text += activate_relay(c[DOUBLE_BOARD_TYPE], c[DOUBLE_BOARD_NUMBER], c[DOUBLE_RELAY_NUMBER], r[RELAY_VALUE_REVERSER])
-         write_file(scripts_dir + file_name, file_text)
-         create_desktop_launcher(username, scripts_dir, c[EVENT_DESCRIPTION], r[RELAY_DESCRIPTION])
-         menu_cats = add_to_category(menu_cats, c[EVENT_CATEGORY], file_name)
-   elif c[EVENT_TYPE] == "PUSH_BUTTON":
-      buttons_function_text += "def button_callback_%s(channel):\n" % c[BUTTON_NUMBER]
-      buttons_function_text += "\tprint(\"%s button pressed\")\n" % c[BUTTON_NUMBER]
-      buttons_function_text += "\tos.system(\"%s.sh\")\n\n" % (scripts_dir + c[EVENT_DESCRIPTION])
-      buttons_setup_text += "GPIO.setup(%s, GPIO.IN, pull_up_down=GPIO.%s)\n" % (c[BUTTON_NUMBER], c[BUTTON_PULL_UP_DOWN])
-      buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=button_callback_%s, bouncetime=%i)\n\n" % (c[BUTTON_NUMBER], c[BUTTON_NUMBER], DEBOUNCE_TIME_MS)
-       
-      #file_name = get_filename(c[EVENT_DESCRIPTION], "Pushed")
+scripts_dir = "/home/%s/ghcontrol/scripts/" % username
+categories = []
+with open("/home/%s/ghcontrol/connection_files_actual/%s.connections" % (username,username)) as connections:
+   lines = connections.readlines()
+   
+for l in lines:
+   line_dict = {}
+   print(l)
+   items = l.split()
+   for i in items:
+      split_item = i.split('=')
+      line_dict[split_item[0]] = split_item[1]
+   print(line_dict)
+   match line_dict['type']:
+      case "ON_OFF_SINGLE":
+         relay_type = [["On",1],["Off",0]]
+         for r in relay_type:
+            relay1 = line_dict['relay1'].split(',')
+            file_name = get_filename(line_dict['name'], r[RELAY_DESCRIPTION])
+            file_text = SCRIPT_LINE
+            file_text += log_event(username, line_dict['name'], r[RELAY_DESCRIPTION])
+            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE]) 
+            write_file(scripts_dir + file_name, file_text)
+            create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
+            menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
+      case "ON_OFF_DOUBLE":
+         relay_type = [["On",1],["Off",0]]
+         for r in relay_type:
+            relay1 = line_dict['relay1'].split(',')
+            relay2 = line_dict['relay2'].split(',')
+            file_name = get_filename(line_dict['name'], r[RELAY_DESCRIPTION])
+            file_text = SCRIPT_LINE
+            file_text += log_event(username, line_dict['name'], r[RELAY_DESCRIPTION])
+            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE])
+            file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE])
+            write_file(scripts_dir + file_name, file_text)
+            create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
+            menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
+      case "REVERSING_PAIR":
+         relay_type = [["Up",1,0],["Down",0,1],["Stop",0,0]]
+         for r in relay_type:
+            relay1 = line_dict['relay1'].split(',')
+            relay2 = line_dict['relay2'].split(',')
+            file_name = get_filename(line_dict['name'], r[RELAY_DESCRIPTION])
+            file_text = SCRIPT_LINE
+            file_text += log_event(username, line_dict['name'], r[RELAY_DESCRIPTION])
+            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE])
+            file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE_REVERSER])
+            write_file(scripts_dir + file_name, file_text)
+            create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
+            menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
+      case "PUSH_BUTTON":
+         up_pin, down_pin, stop_pin = line_dict["up_pin"], line_dict["down_pin"], line_dict["stop_pin"]
+         buttons = [["Up", up_pin],["Down",down_pin],["Stop",stop_pin]]
+         for b in buttons:
+            pin_number = b[1]
+            up_down_stop = b[0]
+            buttons_function_text += "def button_callback_%s(channel):\n" % pin_number
+            buttons_function_text += "\tprint(\"%s button pressed, %s %s\")\n" % (pin_number, line_dict['name'], up_down_stop)
+            buttons_function_text += "\tos.system(\"%s.sh\")\n\n" % (scripts_dir + line_dict['name'] + "_" +  up_down_stop)
+            buttons_setup_text += "GPIO.setup(%s, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)\n" % pin_number
+            buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=button_callback_%s, bouncetime=%i)\n\n" % (pin_number, pin_number, DEBOUNCE_TIME_MS)
+      case "PRESSURE_SENSOR":
+         print("Pressure Sensor not yet implemented")
+      case "FLOW_METER":
+         print("Flow Meter not yet implemented")
+      #file_name = get_filename(line_dict['name'], "Pushed")
       #file_text = SCRIPT_LINE
-      #file_text += log_event(username, c[EVENT_DESCRIPTION], "Pushed")
+      #file_text += log_event(username, line_dict['name'], "Pushed")
       #write_file(scripts_dir + file_name, file_text)
-   else:
+      case _:
          print("RELAY TYPE NOT SUPPORTED: %s" % c[EVENT_TYPE])
 end_text = "message = input(\"Press Enter to Quit\\n\")\n"
 end_text += "GPIO.cleanup()\n"
