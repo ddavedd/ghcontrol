@@ -8,6 +8,8 @@ mkdir 2026
 cd 2026
 mkdir ${USER}
 cd ${USER}
+lcd /home/${USER}/ghcontrol/report_upload/
+put index.html
 mkdir graphs
 cd graphs
 lcd /home/${USER}/ghcontrol/temperature_files/png/
