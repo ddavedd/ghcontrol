@@ -5,6 +5,7 @@
 0 * * * * /usr/bin/sleep 5s && /home/USERNAME/ghcontrol/scripts/get_status_8.sh
 0 * * * * /usr/bin/sleep 10s && /home/USERNAME/ghcontrol/scripts/get_status_3.sh
 0,30 * * * * /home/USERNAME/ghcontrol/temperature_files/graph_current_date.sh
-1,31 * * * * /home/USERNAME/ghcontrol/report_upload/upload_daily_report.sh
-0 23 * * * /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh
-1 23 * * * /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh
+1,31 * * * * /usr/bin/python3 /home/USERNAME/ghcontrol/report_upload/create_index.py
+2,32 * * * * /home/USERNAME/ghcontrol/report_upload/upload_daily_report.sh
+0 23 * * 0 /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh
+5 23 * * 0 /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh
