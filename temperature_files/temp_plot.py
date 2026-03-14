@@ -44,7 +44,7 @@ def draw_rect(axes, start_time, end_time, start_temp, end_temp, color='purple', 
    axes.add_patch(r)
    return r
 
-DPI_PNG = 150
+DPI_PNG = 100
 if len(sys.argv)>2:
    DPI_PNG = int(sys.argv[2])
 
@@ -175,4 +175,5 @@ rs.append(draw_top_fan(ax,times))
 #ax.legend(handles=rs)
 print([r.get_label() for r in rs])
 # Save image
-fig.savefig('png/%s.png' % current_date_string, dpi=DPI_PNG)
+fig.savefig('/home/%s/ghcontrol/temperature_files/png/%s.png' % (username, current_date_string), dpi=DPI_PNG)
+
