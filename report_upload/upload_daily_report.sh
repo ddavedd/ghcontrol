@@ -1,4 +1,5 @@
 #!/bin/bash
+echo UPLOAD_DAILY_REPORT
 FARM_PW=$(cat /home/$USER/ghcontrol/report_upload/.ftp_pass)
 LATEST_LOG=$(ls -t /home/${USER}/ghcontrol/logs/ | head -1)
 LATEST_PNG=$(ls -t /home/${USER}/ghcontrol/temperature_files/png/ | head -1)

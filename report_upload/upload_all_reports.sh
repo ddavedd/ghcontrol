@@ -1,4 +1,5 @@
 #!/bin/bash
+echo UPLOAD_ALL_REPORTS
 FARM_PW=$(cat /home/$USER/ghcontrol/report_upload/.ftp_pass)
 
 ftp -nvi ftp.thefarmwestmont.com << END_SCRIPT

@@ -1,11 +1,11 @@
 @reboot /home/USERNAME/ghcontrol/scripts/log_event.sh "Started USERNAME computer"
-@reboot sleep 10s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/heater_restart.py >> /home/USERNAME/ghcontrol/cron.log
-@reboot sleep 15s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/temperature_read.py >> /home/USERNAME/ghcontrol/cron.log
-0 0 * * * /home/USERNAME/ghcontrol/scripts/log_event.sh "farmerlaptop1 log" >> /home/USERNAME/ghcontrol/cron.log
-0 * * * * /usr/bin/sleep 5s && /home/USERNAME/ghcontrol/scripts/get_status_8.sh >> /home/USERNAME/ghcontrol/cron.log
-0 * * * * /usr/bin/sleep 10s && /home/USERNAME/ghcontrol/scripts/get_status_3.sh >> /home/USERNAME/ghcontrol/cron.log
-0,30 * * * * /home/USERNAME/ghcontrol/temperature_files/graph_current_date.sh >> /home/USERNAME/ghcontrol/cron.log
-1,31 * * * * /usr/bin/python3 /home/USERNAME/ghcontrol/report_upload/create_index.py >> /home/USERNAME/ghcontrol/cron.log
-2,32 * * * * /home/USERNAME/ghcontrol/report_upload/upload_daily_report.sh >> /home/USERNAME/ghcontrol/cron.log
-0 23 * * 0 /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh >> /home/USERNAME/ghcontrol/cron.log
-5 23 * * 0 /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh >> /home/USERNAME/ghcontrol/cron.log
+@reboot sleep 10s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/heater_restart.py &>> /home/USERNAME/ghcontrol/cron.log
+@reboot sleep 15s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/temperature_read.py &>> /home/USERNAME/ghcontrol/cron.log
+0 0 * * * /home/USERNAME/ghcontrol/scripts/log_event.sh "USERNAME log" &>> /home/USERNAME/ghcontrol/cron.log
+0 * * * * /usr/bin/sleep 5s && /home/USERNAME/ghcontrol/scripts/get_status_8.sh &>> /home/USERNAME/ghcontrol/cron.log
+0 * * * * /usr/bin/sleep 10s && /home/USERNAME/ghcontrol/scripts/get_status_3.sh &>> /home/USERNAME/ghcontrol/cron.log
+0,30 * * * * /home/USERNAME/ghcontrol/temperature_files/graph_current_date.sh &>> /home/USERNAME/ghcontrol/cron.log
+1,31 * * * * /usr/bin/python3 /home/USERNAME/ghcontrol/report_upload/create_index.py &>> /home/USERNAME/ghcontrol/cron.log
+2,32 * * * * /home/USERNAME/ghcontrol/report_upload/upload_daily_report.sh &>> /home/USERNAME/ghcontrol/cron.log
+0 23 * * 0 /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh &>> /home/USERNAME/ghcontrol/cron.log
+5 23 * * 0 /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh >> &/home/USERNAME/ghcontrol/cron.log
