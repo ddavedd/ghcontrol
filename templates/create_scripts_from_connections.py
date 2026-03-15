@@ -87,6 +87,7 @@ buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO lib
 buttons_function_text += "GPIO.setwarnings(False)\n"
 buttons_function_text += "GPIO.setmode(GPIO.BOARD)\n\n"
 
+relay_map = {"8": [], "3": [], "PI_PINS": [], "ARDUINO_PINS": [],}
 menu_cats = {}
 scripts_dir = "/home/%s/ghcontrol/scripts/" % username
 categories = []
@@ -103,6 +104,7 @@ for l in lines:
    print(line_dict)
    match line_dict['type']:
       case "ON_OFF_SINGLE":
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name']])
          relay_type = [["On",1],["Off",0]]
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
@@ -114,6 +116,8 @@ for l in lines:
             create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
             menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
       case "ON_OFF_DOUBLE":
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name']])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name']])
          relay_type = [["On",1],["Off",0]]
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
@@ -128,6 +132,8 @@ for l in lines:
             menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
       case "REVERSING_PAIR":
          relay_type = [["Up",1,0],["Down",0,1],["Stop",0,0]]
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name']])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name']])
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
             relay2 = line_dict['relay2'].split(',')
@@ -140,7 +146,12 @@ for l in lines:
             create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
             menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
       case "PUSH_BUTTON":
+         name = line_dict['name']
          up_pin, down_pin, stop_pin = line_dict["up_pin"], line_dict["down_pin"], line_dict["stop_pin"]
+         relay_map["PI_PINS"].append([up_pin,name + "_UP"])
+         relay_map["PI_PINS"].append([down_pin,name + "_DOWN"])
+         relay_map["PI_PINS"].append([stop_pin,name + "_STOP"])
+         
          buttons = [["Up", up_pin],["Down",down_pin],["Stop",stop_pin]]
          for b in buttons:
             pin_number = b[1]
@@ -151,8 +162,10 @@ for l in lines:
             buttons_setup_text += "GPIO.setup(%s, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)\n" % pin_number
             buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=button_callback_%s, bouncetime=%i)\n\n" % (pin_number, pin_number, DEBOUNCE_TIME_MS)
       case "PRESSURE_SENSOR":
+         relay_map["ARDUINO_PINS"].append([line_dict['analog_pin'],line_dict['name']])
          print("Pressure Sensor not yet implemented")
       case "FLOW_METER":
+         relay_map["ARDUINO_PINS"].append([line_dict['digital_pin'],line_dict['name']])
          print("Flow Meter not yet implemented")
       #file_name = get_filename(line_dict['name'], "Pushed")
       #file_text = SCRIPT_LINE
@@ -170,3 +183,16 @@ create_directory_entries(username, {"Greenhouse": []}.items())
 total_menu_xml = open("/home/%s/ghcontrol/templates/raspi_menu_start.xml" % username).read() + subcats + open("/home/%s/ghcontrol/templates/raspi_menu_end.xml" % username).read()
 write_file("/home/%s/.config/menus/rpd-applications" % username, total_menu_xml,".menu")
 
+def write_map_category(map_category, description):
+   map_text = "-----------------------------------\n"
+   map_text += description + "\n"
+   for m in sorted(map_category):
+      map_text += str(m) + "\n"
+   return map_text
+   
+total_map_text = write_map_category(relay_map["8"], "8 Relay Board")
+total_map_text += write_map_category(relay_map["3"], "3 Relay Board")
+total_map_text += write_map_category(relay_map["PI_PINS"], "Raspberry Pi GPIO Pins")
+total_map_text += write_map_category(relay_map["ARDUINO_PINS"], "Arduino Pins")
+print(total_map_text)
+write_file("/home/%s/ghcontrol/%s_connections" % (username, username), total_map_text, ".map")
