@@ -1,3 +1,4 @@
+USER=$(id -un)
 for f in /home/$USER/ghcontrol/temperature_files/tempf/*.tempf
 do
    echo $f

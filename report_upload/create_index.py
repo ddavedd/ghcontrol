@@ -1,5 +1,7 @@
 import os
 user = os.getlogin()
+print("Report Upload")
+print("User is " + str(user))
 graphs_directory = "/home/%s/ghcontrol/temperature_files/png/" % user
 logs_directory = "/home/%s/ghcontrol/logs/" % user
 print("Creating index")
