@@ -8,4 +8,4 @@
 1,31 * * * * /usr/bin/python3 /home/USERNAME/ghcontrol/report_upload/create_index.py &>> /home/USERNAME/ghcontrol/cron.log 2>&1
 2,32 * * * * /home/USERNAME/ghcontrol/report_upload/upload_daily_report.sh &>> /home/USERNAME/ghcontrol/cron.log 2>&1
 0 23 * * 0 /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh &>> /home/USERNAME/ghcontrol/cron.log 2>&1
-5 23 * * 0 /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh >> &/home/USERNAME/ghcontrol/cron.log 2>&1
+5 23 * * 0 /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh &>> /home/USERNAME/ghcontrol/cron.log 2>&1
