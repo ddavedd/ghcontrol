@@ -2,7 +2,9 @@ import os
 user = os.getlogin()
 graphs_directory = "/home/%s/ghcontrol/temperature_files/png/" % user
 logs_directory = "/home/%s/ghcontrol/logs/" % user
-
+print("Creating index")
+print("Graphs directory "+graphs_directory)
+print("Logs directory "+logs_directory)
 files_list = []
 for f in os.listdir(graphs_directory):
    if f.endswith(".png"):
