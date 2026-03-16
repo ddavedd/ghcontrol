@@ -1,22 +1,17 @@
-Exhaust_Fan_South Airflow 3 0 1 ON_OFF_SINGLE
-Exhaust_Fan_North Airflow 3 0 2 ON_OFF_SINGLE
-Haf_Fan Airflow 3 0 3 ON_OFF_SINGLE
-Heater_East_Enable Heaters 3 1 1 ON_OFF_SINGLE
-Heater_West_Enable Heaters 3 1 2 ON_OFF_SINGLE
-Rollup_Side_North Rollups 8 1 1 REVERSING_PAIR 8 1 2
-Louver_Unused Airflow 8 1 3 REVERSING_PAIR  8 1 4 
-Heater_East_Tstat Heaters 8 1 5 ON_OFF_SINGLE
-Heater_West_Tstat Heaters 8 1 6 ON_OFF_SINGLE
-Rollup_Side_South Rollups 8 1 7 REVERSING_PAIR 8 1 8
-Water_1 Water 8 0 7 ON_OFF_SINGLE
-Water_2 Water 8 0 8 ON_OFF_SINGLE
-Rollup_Side_North_Down R R 21 PUD_DOWN PUSH_BUTTON
-Rollup_Side_North_Up R R 20 PUD_DOWN PUSH_BUTTON
-Rollup_Side_North_Stop R R 16 PUD_DOWN PUSH_BUTTON
-Rollup_Side_South_Down R R 7 PUD_DOWN PUSH_BUTTON
-Rollup_Side_South_Up R R 8 PUD_DOWN PUSH_BUTTON
-Rollup_Side_South_Stop R R 25 PUD_DOWN PUSH_BUTTON
-TempSensor1 longid R R 4 TEMPERATURE_SENSOR
-TempSensor2 longid R R 4 TEMPERATURE_SENSOR 
-PressureSensor1 A A A A01 PRESSURE_SENSOR
-FlowMeter1 A A A 2 FLOW_METER
+name=Exhaust_Fan_South category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,1 
+name=Exhaust_Fan_North category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,2
+name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,3
+name=Heater_East_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1
+name=Heater_West_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,2
+name=Rollup_Side_North category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=1,1 relay2=1,2
+name=Rollup_Side_South category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=1,7 relay2=1,8
+name=Louver_Unused category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=1,3 relay2=1,4 
+name=Heater_East_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay1=1,5
+name=Heater_West_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay1=1,6
+name=Water_1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,7
+name=Water_2 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,8
+name=Rollup_Side_North type=PUSH_BUTTON up_pin=21 down_pin=20 stop_pin=12
+name=Rollup_Side_South type=PUSH_BUTTON up_pin=8 down_pin=8 stop_pin=25
+name=TempSensor1 type=TEMPERATURE_SENSOR longid=0 
+name=PressureSensor1 type=PRESSUR_SENSOR analog_pin=A01
+name=FlowMeter1 type=FLOW_METER digitial_pin=2
