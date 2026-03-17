@@ -189,10 +189,20 @@ def write_map_category(map_category, description):
    for m in sorted(map_category):
       map_text += str(m) + "\n"
    return map_text
-   
+
+def write_map_category_comp(cat_description, map_category):
+   map_text = ""
+   for s in sorted(map_category):
+      map_text += "%s,%s,%s\n" % (cat_description[0], s[0],s[1])
+   return map_text
+      
+      
+comp_map_text = write_map_category_comp(["8"], relay_map["8"])
+comp_map_text += write_map_category_comp(["3"], relay_map["3"])
 total_map_text = write_map_category(relay_map["8"], "8 Relay Board")
 total_map_text += write_map_category(relay_map["3"], "3 Relay Board")
 total_map_text += write_map_category(relay_map["PI_PINS"], "Raspberry Pi GPIO Pins")
 total_map_text += write_map_category(relay_map["ARDUINO_PINS"], "Arduino Pins")
 print(total_map_text)
 write_file("/home/%s/ghcontrol/%s_connections" % (username, username), total_map_text, ".map")
+write_file("/home/%s/ghcontrol/%s_comp_read" % (username, username), comp_map_text, ".map")
