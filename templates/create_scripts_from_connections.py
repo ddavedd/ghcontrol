@@ -1,17 +1,5 @@
 import os
-#EVENT_DESCRIPTION = 0
-#EVENT_CATEGORY = 1
-#BOARD_TYPE = 2
-#BOARD_NUMBER = 3
-#RELAY_NUMBER = 4
-#EVENT_TYPE = 5
-#DOUBLE_BOARD_TYPE = 6
-#DOUBLE_BOARD_NUMBER = 7
-#DOUBLE_RELAY_NUMBER = 8
-
-#BUTTON_NUMBER = 3
-#BUTTON_PULL_UP_DOWN = 4
-
+ROLLUP_TIME_MINUTE = 3
 RELAY_DESCRIPTION = 0
 RELAY_VALUE = 1
 RELAY_VALUE_REVERSER = 2
@@ -153,12 +141,14 @@ for l in lines:
          relay_map["PI_PINS"].append([stop_pin,name + "_STOP"])
          
          buttons = [["Up", up_pin],["Down",down_pin],["Stop",stop_pin]]
+         stop_name = buttons[2][0]
          for b in buttons:
             pin_number = b[1]
             up_down_stop = b[0]
             buttons_function_text += "def button_callback_%s(channel):\n" % pin_number
             buttons_function_text += "\tprint(\"%s button pressed, %s %s\")\n" % (pin_number, line_dict['name'], up_down_stop)
-            buttons_function_text += "\tos.system(\"%s.sh\")\n\n" % (scripts_dir + line_dict['name'] + "_" +  up_down_stop)
+            buttons_function_text += "\tos.system(\"%s.sh\")\n" % (scripts_dir + line_dict['name'] + "_" +  up_down_stop)
+            buttons_function_text += "\tos.system(\"/usr/bin/sleep %im && %s.sh\")\n\n" % (ROLLUP_TIME_MINUTE, scripts_dir + line_dict['name'] + "_" + stop_name)
             buttons_setup_text += "GPIO.setup(%s, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)\n" % pin_number
             buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=button_callback_%s, bouncetime=%i)\n\n" % (pin_number, pin_number, DEBOUNCE_TIME_MS)
       case "PRESSURE_SENSOR":
