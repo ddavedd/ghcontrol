@@ -49,16 +49,16 @@ def create_xml_menu(cat_dict):
    #import xml.etree.ElementTree as ET
    total_menu = ""
    for k,v in cat_dict:
-      menu_text = "<Menu>\n"
-      menu_text += "\t<Name>%s</Name>\n" % k
-      menu_text += "\t<Directory>%s.directory</Directory>\n" % k
+      menu_text = "\t\t<Menu>\n"
+      menu_text += "\t\t<Name>%s</Name>\n" % k
+      menu_text += "\t\t<Directory>%s.directory</Directory>\n" % k
       for v_i in sorted(v):
-         menu_text += "\t<Include><Filename>%s.desktop</Filename></Include>\n" % v_i
-      menu_text += "\t<Layout>\n\t\t<Merge type=\"menus\"/>\n"
+         menu_text += "\t\t<Include><Filename>%s.desktop</Filename></Include>\n" % v_i
+      menu_text += "\t\t<Layout>\n\t\t\t<Merge type=\"menus\"/>\n"
       for v_i in sorted(v):
-         menu_text += "\t\t<Filename>%s.desktop</Filename>\n" % v_i
-      menu_text += "\t\t<Merge type=\"files\"/>\n"
-      menu_text += "\t</Layout>\n</Menu>\n"
+         menu_text += "\t\t\t<Filename>%s.desktop</Filename>\n" % v_i
+      menu_text += "\t\t\t<Merge type=\"files\"/>\n"
+      menu_text += "\t\t</Layout>\n\t\t</Menu>\n"
       total_menu += menu_text
    return total_menu
 
