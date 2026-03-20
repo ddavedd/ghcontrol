@@ -1,0 +1,3 @@
+name=Louver_High_Bay_2 category=Louvers type=ON_OFF_SINGLE relay_board_type=8 relay1=0,1
+name=Louver_High_Bay_4 category=Louvers type=ON_OFF_SINGLE relay_board_type=8 relay1=2,1
+name=Exhaust_1_Untested category=Exhausts type=ON_OFF_DOUBLE relay_board_type=3 relay1=0,1 relay2=0,2
