@@ -1,0 +1,5 @@
+name=Water_Bay_1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,1
+name=Water_Bay_2 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,2
+name=Water_Bay_3 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,3
+name=Water_Bay_4 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,4
+name=Water_Bay_5 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
