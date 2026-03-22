@@ -1,16 +1,6 @@
-name=Exhaust_Fan category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=0,1  relay2=0,2
-name=Top_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1
-name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,3 normally_closed=1
-name=Louver category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,1 relay2=0,2
-name=Rollup_Side_North category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4
-name=Rollup_Side_South category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,8 relay2=0,7
-name=Water_1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6
-name=Water_2 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
-name=Heater_East_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1
-name=Heater_West_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,2
-name=Heater_East_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay1=1,1
-name=Heater_West_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay1=1,2
-name=Rollup_Side_North type=PUSH_BUTTON up_pin=10 down_pin=11 stop_pin=12
-name=Rollup_Side_South type=PUSH_BUTTON up_pin=13 down_pin=14 stop_pin=15
+name=Main_Pump category=Main type=ON_OFF_SINGLE relay_board_type=8 relay1=0,1 normally_closed=1
+name=Half_Acre_Valve category=Valve type=ON_OFF_SINGLE relay_board_type=8 relay1=0,2 normally_closed=1
+name=Hoophouse_Valve category=Valve type=ON_OFF_SINGLE relay_board_type=8 relay1=0,3 normally_closed=1
+name=Irrigation_Tank_Valve category=Valve type=ON_OFF_SINGLE relay_board_type=8 relay1=0,4
 name=PressureSensor1 type=PRESSURE_SENSOR analog_pin=A01
 name=FlowMeter1 type=FLOW_METER digital_pin=2
