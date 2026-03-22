@@ -93,7 +93,10 @@ for l in lines:
    match line_dict['type']:
       case "ON_OFF_SINGLE":
          relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name']])
-         relay_type = [["On",1],["Off",0]]
+         if "normally_closed" in line_dict.keys():
+            relay_type = [["On",0],["Off",1]]
+         else:
+            relay_type = [["On",1],["Off",0]]
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
             file_name = get_filename(line_dict['name'], r[RELAY_DESCRIPTION])

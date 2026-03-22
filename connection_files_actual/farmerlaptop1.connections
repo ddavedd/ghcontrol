@@ -1,6 +1,6 @@
 name=Exhaust_Fan category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=0,1  relay2=0,2
 name=Top_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1
-name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,3
+name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,3 normally_closed=1
 name=Louver category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,1 relay2=0,2
 name=Rollup_Side_North category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4
 name=Rollup_Side_South category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,8 relay2=0,7
