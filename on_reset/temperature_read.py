@@ -6,6 +6,7 @@ import datetime
 TIME_BETWEEN_READINGS = 14.0
 WAIT_DELAY = .2
 WRITE_APPEND = "a"
+OVERWRITE = "w"
 
 def read_temp_raw(device_file):
    lines = ""
@@ -40,11 +41,14 @@ if len(device_files) > 0:
    while True:
       line = ""
       filename = "/home/%s/ghcontrol/temperature_files/tempf/%s.tempf" % (username, datetime.datetime.now().strftime("%Y-%m-%d"))
+      filename_current = "/home/%s/ghcontrol/temperature_files/tempf/current.tempf" % (username)
       line += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
       for device_file in device_files:
          line += " %.1f" % read_temp(device_file)
       line += "\n"
       with open(filename, WRITE_APPEND) as f:
+         f.write(line)
+      with open(filename_current, OVERWRITE) as f:
          f.write(line)
       time.sleep(TIME_BETWEEN_READINGS)
 print("No temperature sensors or something went wrong inside read loop")
