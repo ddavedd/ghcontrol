@@ -23,9 +23,12 @@ def get_filename(event_description, relay_description):
 def log_event(username, event_description, relay_description):
    return "/home/%s/ghcontrol/scripts/log_event.sh \"%s %s\"\n" % (username, event_description, relay_description)
 
-def activate_relay(board_type, board_number, relay_number, relay_value):
-   return "/usr/local/bin/%irelind %i write %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
-
+def activate_relay(board_type, board_number, relay_number, relay_value, is_485=False):
+   if is_485:
+      return "/usr/local/bin/%irelind %i mwrite %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
+   else:
+      return "/usr/local/bin/%irelind %i write %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
+   
 def create_desktop_launcher(username, script_dir, event_description, relay_description):
    launcher_text = "[Desktop Entry]\nName=%s_%s\n" % (event_description, relay_description)
    launcher_text += "Exec=/home/%s/ghcontrol/scripts/%s.sh\n" % (username, get_filename(event_description, relay_description))
@@ -90,9 +93,13 @@ for l in lines:
       split_item = i.split('=')
       line_dict[split_item[0]] = split_item[1]
    print(line_dict)
+   if 'is_485' in line_dict.keys():
+      is_485 = True
+   else:
+      is_485 = False
    match line_dict['type']:
       case "ON_OFF_SINGLE":
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name']])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485])
          if "normally_closed" in line_dict.keys():
             relay_type = [["On",0],["Off",1]]
          else:
@@ -102,13 +109,13 @@ for l in lines:
             file_name = get_filename(line_dict['name'], r[RELAY_DESCRIPTION])
             file_text = SCRIPT_LINE
             file_text += log_event(username, line_dict['name'], r[RELAY_DESCRIPTION])
-            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE]) 
+            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE], is_485) 
             write_file(scripts_dir + file_name, file_text)
             create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
             menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
       case "ON_OFF_DOUBLE":
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name']])
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name']])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name'], is_485])
          relay_type = [["On",1],["Off",0]]
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
@@ -116,23 +123,23 @@ for l in lines:
             file_name = get_filename(line_dict['name'], r[RELAY_DESCRIPTION])
             file_text = SCRIPT_LINE
             file_text += log_event(username, line_dict['name'], r[RELAY_DESCRIPTION])
-            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE])
-            file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE])
+            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE], is_485)
+            file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE], is_485)
             write_file(scripts_dir + file_name, file_text)
             create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
             menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
       case "REVERSING_PAIR":
          relay_type = [["Up",1,0],["Down",0,1],["Stop",0,0]]
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name']])
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name']])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name'], is_485])
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
             relay2 = line_dict['relay2'].split(',')
             file_name = get_filename(line_dict['name'], r[RELAY_DESCRIPTION])
             file_text = SCRIPT_LINE
             file_text += log_event(username, line_dict['name'], r[RELAY_DESCRIPTION])
-            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE])
-            file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE_REVERSER])
+            file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE], is_485)
+            file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE_REVERSER], is_485)
             write_file(scripts_dir + file_name, file_text)
             create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
             menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
