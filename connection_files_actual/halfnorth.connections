@@ -4,12 +4,12 @@ name=Jet_Bay_5 category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=2,2
 name=Heater_Bay_1_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=3,1 is_485=True
 name=Heater_Bay_3_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=3,2 is_485=True
 name=Heater_Bay_5_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=3,3 is_485=True
-name=Heater_Bay_1_East_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay=0,1
-name=Heater_Bay_1_West_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay=0,2
-name=Heater_Bay_3_East_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay=0,3
-name=Heater_Bay_3_West_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay=0,4
-name=Heater_Bay_5_East_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay=0,5
-name=Heater_Bay_5_West_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay=0,6
+name=Heater_Bay_1_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,1
+name=Heater_Bay_1_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,2
+name=Heater_Bay_3_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,3
+name=Heater_Bay_3_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,4
+name=Heater_Bay_5_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
+name=Heater_Bay_5_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6
 name=Exterior_Motor_West category=Exterior_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=4,1 is_485=True
 name=Exterior_Motor_Mid category=Exterior_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=4,2 is_485=True
 name=Exterior_Motor_East category=Exterior_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=4,3 is_485=True
