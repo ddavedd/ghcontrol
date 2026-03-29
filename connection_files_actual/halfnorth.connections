@@ -16,4 +16,9 @@ name=Exterior_Motor_East category=Exterior_Motors type=ON_OFF_SINGLE relay_board
 name=Louver_Bay_1 category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=5,1 is_485=True
 name=Louver_Bay_3 category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=5,2 is_485=True
 name=Louver_Bay_5 category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=5,3 is_485=True
-
+name=Ridge_Bay_1 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=6,1 is_485=True
+name=Ridge_Bay_2 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=6,2 is_485=True
+name=Ridge_Bay_3 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=6,3 is_485=True
+name=Ridge_Bay_4 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,1 is_485=True
+name=Ridge_Bay_5 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,2 is_485=True
+name=Shade_Motor category=Shade_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,3 is_485=True
