@@ -11,3 +11,5 @@ CRON_LOG=/home/USERNAME/ghcontrol/cron.log
 2,32 * * * * /home/USERNAME/ghcontrol/report_upload/upload_daily_report.sh &>> $CRON_LOG 2>&1
 0 23 * * 0 /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh &>> $CRON_LOG 2>&1
 5 23 * * 0 /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh &>> $CRON_LOG 2>&1
+15 8 * * * /home/USERNAME/ghcontrol/scripts/Haf_Fan_Off.sh &>> $CRON_LOG 2>&1
+15 19 * * * /home/USERNAME/ghcontrol/scripts/Haf_Fan_Off.sh &>> $CRON_LOG 2>&1
