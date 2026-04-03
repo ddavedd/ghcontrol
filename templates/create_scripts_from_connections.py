@@ -76,7 +76,7 @@ buttons_setup_text = ""
 buttons_function_text = "import os\n"
 buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library\n"
 buttons_function_text += "GPIO.setwarnings(False)\n"
-buttons_function_text += "GPIO.setmode(GPIO.BOARD)\n\n"
+buttons_function_text += "GPIO.setmode(GPIO.BCM)\n\n"
 
 relay_map = {"8": [], "3": [], "PI_PINS": [], "ARDUINO_PINS": [],}
 menu_cats = {}
