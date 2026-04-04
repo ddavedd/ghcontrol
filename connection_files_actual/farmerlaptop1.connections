@@ -1,9 +1,9 @@
-name=Exhaust_Fan category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=0,1  relay2=0,2
+name=Exhaust_Fan category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=0,1  relay2=0,2 is_485=True
 name=Top_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1
 name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,3 normally_closed=1
-name=Louver category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,1 relay2=0,2
-name=Rollup_Side_North category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4
-name=Rollup_Side_South category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,8 relay2=0,7
+name=Louver category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,1 relay2=0,2 name_style=openclosestop
+name=Rollup_Side_North category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4 name_style=updownstop
+name=Rollup_Side_South category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,8 relay2=0,7 name_style=updownstop
 name=Water_1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6
 name=Water_2 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
 name=Heater_East_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1

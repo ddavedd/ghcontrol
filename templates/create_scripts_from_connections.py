@@ -99,11 +99,13 @@ for l in lines:
       is_485 = False
    match line_dict['type']:
       case "ON_OFF_SINGLE":
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485])
+         
          if "normally_closed" in line_dict.keys():
             relay_type = [["On",0],["Off",1]]
+            relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485, "OFF"])
          else:
             relay_type = [["On",1],["Off",0]]
+            relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485, "ON"])
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
             file_name = get_filename(line_dict['name'], r[RELAY_DESCRIPTION])
@@ -114,8 +116,8 @@ for l in lines:
             create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
             menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
       case "ON_OFF_DOUBLE":
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485])
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name'], is_485])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485, "ON"])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name'], is_485, "ON"])
          relay_type = [["On",1],["Off",0]]
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
@@ -129,9 +131,17 @@ for l in lines:
             create_desktop_launcher(username, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
             menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
       case "REVERSING_PAIR":
-         relay_type = [["Up",1,0],["Down",0,1],["Stop",0,0]]
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485])
-         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name'], is_485])
+         if 'name_style' in line_dict.keys():
+            if line_dict['name_style'] == "updownstop":
+               relay_type = [["Up",1,0],["Down",0,1],["Stop",0,0]]
+            elif line_dict['name_style'] == "openclosestop":
+               relay_type = [["Open",1,0],["Close",0,1],["Stop",0,0]]
+            else:
+               relay_type = [["FirstRelayOn",1,0],["SecondRelayOn",0,1],["BothRelaysOff",0,0]]
+         else:
+            relay_type = [["FirstRelayOn",1,0],["SecondRelayOn",0,1],["BothRelaysOff",0,0]]
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485, relay_type[0][0]])
+         relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name'], is_485, relay_type[1][0]])
          for r in relay_type:
             relay1 = line_dict['relay1'].split(',')
             relay2 = line_dict['relay2'].split(',')
@@ -193,7 +203,7 @@ def write_map_category(map_category, description):
 def write_map_category_comp(cat_description, map_category):
    map_text = ""
    for s in sorted(map_category):
-      map_text += "%s,%s,%s\n" % (cat_description[0], s[0],s[1])
+      map_text += "%s,%s,%s,%s\n" % (cat_description[0], s[0],s[1], s[-1])
    return map_text
       
       
