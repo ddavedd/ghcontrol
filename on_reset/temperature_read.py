@@ -3,6 +3,7 @@ import os
 import glob
 import time
 import datetime
+MAX_TEMP = 150.0
 TIME_BETWEEN_READINGS = 14.0
 WAIT_DELAY = .2
 WRITE_APPEND = "a"
@@ -26,6 +27,8 @@ def read_temp(device_file):
       #print(temp_string)
       temp_c = float(temp_string) / 1000.0
       temp_f = temp_c * 9.0 / 5.0 + 32.0
+      if temp_f > MAX_TEMP:
+         temp_f = 70.0
       return temp_f
    # If things go wrong, send back an extreme value
    return -100.0
