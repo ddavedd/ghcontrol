@@ -1,7 +1,8 @@
 import os
 import subprocess
+username = os.getlogin()
 
-with open("hh1_comp_read.map") as f:
+with open("/home/%s/ghcontrol/%s_comp_read.map" % (username,username)) as f:
 	connections = f.readlines()
 	
 if len(connections)>0:
