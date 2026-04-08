@@ -74,9 +74,7 @@ def create_directory_entries(username, cat_dict):
 username = os.getlogin()
 buttons_setup_text = ""
 buttons_function_text = "import os\n"
-buttons_function_text += "import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library\n"
-buttons_function_text += "GPIO.setwarnings(False)\n"
-buttons_function_text += "GPIO.setmode(GPIO.BCM)\n\n"
+buttons_function_text += "from gpiozero import Button\n\n"
 
 relay_map = {"8": [], "3": [], "PI_PINS": [], "ARDUINO_PINS": [],}
 menu_cats = {}
@@ -165,12 +163,11 @@ for l in lines:
          for b in buttons:
             pin_number = b[1]
             up_down_stop = b[0]
-            buttons_function_text += "def button_callback_%s(channel):\n" % pin_number
-            buttons_function_text += "\tprint(\"%s button pressed, %s %s\")\n" % (pin_number, line_dict['name'], up_down_stop)
-            buttons_function_text += "\tos.system(\"%s.sh\")\n" % (scripts_dir + line_dict['name'] + "_" +  up_down_stop)
-            buttons_function_text += "\tos.system(\"/usr/bin/sleep %im && %s.sh\")\n\n" % (ROLLUP_TIME_MINUTE, scripts_dir + line_dict['name'] + "_" + stop_name)
-            buttons_setup_text += "GPIO.setup(%s, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)\n" % pin_number
-            buttons_setup_text += "GPIO.add_event_detect(%s,GPIO.RISING,callback=button_callback_%s, bouncetime=%i)\n\n" % (pin_number, pin_number, DEBOUNCE_TIME_MS)
+            buttons_function_text += "def button_callback_%s():\n" % pin_number
+            buttons_function_text += "\tos.system(\"%s '%s Button Pressed, %s %s'\")\n" % (scripts_dir + "log_event.sh", pin_number, line_dict['name'], up_down_stop)
+            buttons_function_text += "\tos.system(\"%s.sh\")\n\n" % (scripts_dir + line_dict['name'] + "_" +  up_down_stop)
+            buttons_setup_text += "button_%s = Button(pin=%s, pull_up=False,hold_time=.5)\n" % (pin_number, pin_number)
+            buttons_setup_text += "button_%s.when_held = button_callback_%s\n\n" % (pin_number, pin_number)
       case "PRESSURE_SENSOR":
          relay_map["ARDUINO_PINS"].append([line_dict['analog_pin'],line_dict['name']])
          print("Pressure Sensor not yet implemented")
@@ -184,7 +181,6 @@ for l in lines:
       case _:
          print("RELAY TYPE NOT SUPPORTED: %s" % c[EVENT_TYPE])
 end_text = "message = input(\"Press Enter to Quit\\n\")\n"
-end_text += "GPIO.cleanup()\n"
 write_file("/home/%s/ghcontrol/on_reset/buttons_setup" % username, buttons_function_text + buttons_setup_text + end_text, ".py")
 
 create_directory_entries(username, menu_cats.items())
