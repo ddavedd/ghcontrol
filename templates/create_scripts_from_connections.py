@@ -74,8 +74,8 @@ def create_directory_entries(username, cat_dict):
 username = os.getlogin()
 buttons_setup_text = ""
 buttons_function_text = "import os\n"
-buttons_function_text += "from gpiozero import Button\n\n"
-
+buttons_function_text += "from gpiozero import Button\n"
+buttons_function_text += "from signal import pause\n\n"
 relay_map = {"8": [], "3": [], "PI_PINS": [], "ARDUINO_PINS": [],}
 menu_cats = {}
 scripts_dir = "/home/%s/ghcontrol/scripts/" % username
@@ -180,7 +180,7 @@ for l in lines:
       #write_file(scripts_dir + file_name, file_text)
       case _:
          print("RELAY TYPE NOT SUPPORTED: %s" % c[EVENT_TYPE])
-end_text = "message = input(\"Press Enter to Quit\\n\")\n"
+end_text = "pause()\n"#"message = input(\"Press Enter to Quit\\n\")\n"
 write_file("/home/%s/ghcontrol/on_reset/buttons_setup" % username, buttons_function_text + buttons_setup_text + end_text, ".py")
 
 create_directory_entries(username, menu_cats.items())
