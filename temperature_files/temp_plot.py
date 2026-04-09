@@ -175,5 +175,6 @@ rs.append(draw_top_fan(ax,times))
 #ax.legend(handles=rs)
 print([r.get_label() for r in rs])
 # Save image
+fig.set_size_inches(12,3)
 fig.savefig('/home/%s/ghcontrol/temperature_files/png/%s.png' % (username, current_date_string), dpi=DPI_PNG)
 
