@@ -1,16 +1,18 @@
 USER=$(id -un)
 CRON_LOG=/home/USERNAME/ghcontrol/cron.log
-@reboot /home/USERNAME/ghcontrol/scripts/log_event.sh "Started USERNAME computer"
+@reboot /home/USERNAME/ghcontrol/scripts/log_event.sh "Started USERNAME computer, cron log is $CRON_LOG"
 @reboot sleep 10s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/heater_restart.py &>> $CRON_LOG 2>&1
 @reboot sleep 15s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/temperature_read.py &>> $CRON_LOG 2>&1
-0 0 * * * /home/USERNAME/ghcontrol/scripts/log_event.sh "USERNAME log" &>> $CRON_LOG 2>&1
+@reboot sleep 20s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/control_temp.py >> /home/USERNAME/ghcontrol/control.log
+@reboot sleep 25s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/buttons_setup.py &>> $CRON_LOG 2>&1
+0 0 * * * /home/USERNAME/ghcontrol/scripts/log_event.sh "USERNAME log, cron log is $CRON_LOG" &>> $CRON_LOG 2>&1
 0 * * * * /usr/bin/sleep 5s && /home/USERNAME/ghcontrol/scripts/get_status_8.sh &>> $CRON_LOG 2>&1
 0 * * * * /usr/bin/sleep 10s && /home/USERNAME/ghcontrol/scripts/get_status_3.sh &>> $CRON_LOG 2>&1
-0 * * * * /usr/bin/sleep 15s && /usr/bin/python3 /home/USERNAME/ghcontrol/read_status_on.py &>> $>>CRON_LOG 2>&1
-0,30 * * * * /home/USERNAME/ghcontrol/temperature_files/graph_current_date.sh &>> $CRON_LOG 2>&1
+0 * * * * /usr/bin/sleep 15s && /usr/bin/python3 /home/USERNAME/ghcontrol/read_status_on.py &>> $CRON_LOG 2>&1
+29,59 * * * * /home/USERNAME/ghcontrol/temperature_files/graph_current_date.sh &>> $CRON_LOG 2>&1
 1,31 * * * * /usr/bin/python3 /home/USERNAME/ghcontrol/report_upload/create_index.py &>> $CRON_LOG 2>&1
 2,32 * * * * /home/USERNAME/ghcontrol/report_upload/upload_daily_report.sh &>> $CRON_LOG 2>&1
-0 23 * * 0 /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh &>> $CRON_LOG 2>&1
+0 23 * * * /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh &>> $CRON_LOG 2>&1
 5 23 * * 0 /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh &>> $CRON_LOG 2>&1
 15 8 * * * /home/USERNAME/ghcontrol/scripts/Haf_Fan_Off.sh &>> $CRON_LOG 2>&1
 15 19 * * * /home/USERNAME/ghcontrol/scripts/Haf_Fan_On.sh &>> $CRON_LOG 2>&1
