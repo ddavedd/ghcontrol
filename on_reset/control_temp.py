@@ -11,12 +11,11 @@ def call_script(script_name):
 	os.system(script_path)
 	
 try:
-	with open("/home/%s/ghcontrol/control_temperatures.txt" % username) as f:
+	with open("/home/%s/ghcontrol/control_files/%s.control" % (username,username)) as f:
 		for line in f.readlines():
 			control_values.append(line.strip().split())
 except FileNotFoundError:
 	print("No control values file found")
-
 
 print(control_values)
 controls = []
