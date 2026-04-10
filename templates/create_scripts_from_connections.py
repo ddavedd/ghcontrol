@@ -199,7 +199,7 @@ def write_map_category(map_category, description):
 def write_map_category_comp(cat_description, map_category):
    map_text = ""
    for s in sorted(map_category):
-      map_text += "%s,%s,%s,%s\n" % (cat_description[0], s[0],s[1], s[-1])
+      map_text += "%s,%s,%s,%s,%s\n" % (cat_description[0], s[0], s[1], s[2], s[3])
    return map_text
       
       
