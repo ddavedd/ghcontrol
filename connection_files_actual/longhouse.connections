@@ -12,6 +12,5 @@ name=Water_1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,7
 name=Water_2 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,8
 name=Rollup_Side_North type=PUSH_BUTTON up_pin=21 down_pin=20 stop_pin=12
 name=Rollup_Side_South type=PUSH_BUTTON up_pin=8 down_pin=8 stop_pin=25
-name=TempSensor1 type=TEMPERATURE_SENSOR longid=0 
-name=PressureSensor1 type=PRESSUR_SENSOR analog_pin=A01
-name=FlowMeter1 type=FLOW_METER digitial_pin=2
+name=PressureSensor1 type=PRESSURE_SENSOR analog_pin=A01
+name=FlowMeter1 type=FLOW_METER digital_pin=2
