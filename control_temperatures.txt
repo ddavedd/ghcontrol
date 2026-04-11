@@ -1,4 +1,0 @@
-+ 85.0 2.0 Exhaust_Fan_High_On.sh Exhaust_Fan_High_Off.sh
-+ 80.0 2.0 Exhaust_Fan_Low_On.sh Exhaust_Fan_Low_Off.sh
-+ 70.0 2.0 Louver_Open.sh Louver_Close.sh 
-- 52.0 4.0 Test_Heater_On.sh Test_Heater_Off.sh
