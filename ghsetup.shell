@@ -20,10 +20,15 @@ sudo raspi-config nonint do_serial_hw 0
 git clone https://github.com/SequentMicrosystems/3relind-rpi.git
 git clone https://github.com/SequentMicrosystems/8relind-rpi.git
 #git clone https://github.com/SequentMicrosystems/8relay-rpi.git
+#git clone https://github.com/SequentMicrosystems/8crt-rpi.git
+#cd ~/8crt-rpi
+#sudo make install
+#3 Relay board setup
 cd ~/3relind-rpi
 sudo make install
 cd python/3relind/
 sudo python3 setup.py install
+# 8 relay board steup
 cd ~/8relind-rpi
 sudo make install
 #cd python/lib8relind/
