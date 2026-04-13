@@ -40,7 +40,8 @@ mkdir desktop-directories
 cd ~
 # REmove directories we won't use with our Pi'
 rmdir Documents Music Pictures Public Templates Videos
-git clone git@github.com:ddavedd/ghcontrol.git
+git clone https://github.com/ddavedd/ghcontrol.git
+#git clone git@github.com:ddavedd/ghcontrol.git
 cd ~/ghcontrol
 ln -s /home/${USER}/ghcontrol/.pass_msmtp /home/${USER}/.pass_msmtp
 ln -s /home/${USER}/ghcontrol/.msmtprc /home/${USER}/.msmtprc
