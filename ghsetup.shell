@@ -1,5 +1,6 @@
 #! /usr/bin/bash
 # Set up a virtual environment because python wants us to
+sudo apt-get update
 cd ~
 sudo apt-get install build-essential python3-pip python3-dev python3-smbus git ftp python3-matplotlib msmtp
 python3 -m venv .gh_control_venv
@@ -20,10 +21,15 @@ sudo raspi-config nonint do_serial_hw 0
 git clone https://github.com/SequentMicrosystems/3relind-rpi.git
 git clone https://github.com/SequentMicrosystems/8relind-rpi.git
 #git clone https://github.com/SequentMicrosystems/8relay-rpi.git
+#git clone https://github.com/SequentMicrosystems/8crt-rpi.git
+#cd ~/8crt-rpi
+#sudo make install
+#3 Relay board setup
 cd ~/3relind-rpi
 sudo make install
 cd python/3relind/
 sudo python3 setup.py install
+# 8 relay board steup
 cd ~/8relind-rpi
 sudo make install
 #cd python/lib8relind/
@@ -40,7 +46,8 @@ mkdir desktop-directories
 cd ~
 # REmove directories we won't use with our Pi'
 rmdir Documents Music Pictures Public Templates Videos
-git clone git@github.com:ddavedd/ghcontrol.git
+git clone https://github.com/ddavedd/ghcontrol.git
+#git clone git@github.com:ddavedd/ghcontrol.git
 cd ~/ghcontrol
 ln -s /home/${USER}/ghcontrol/.pass_msmtp /home/${USER}/.pass_msmtp
 ln -s /home/${USER}/ghcontrol/.msmtprc /home/${USER}/.msmtprc
