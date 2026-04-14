@@ -22,3 +22,9 @@ name=Ridge_Bay_3 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 rel
 name=Ridge_Bay_4 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,1 is_485=True
 name=Ridge_Bay_5 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,2 is_485=True
 name=Shade_Motor category=Shade_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,3 is_485=True
+name=Rollup_Side_Enable category=Rollups type=ON_OFF_SINGLE relay_board_type=8 relay1=1,1
+name=Rollup_Side_East category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,7 relay2=0,5 name_style=updownstop
+name=Rollup_Side_West category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,4 relay2=0,2 name_style=updownstop
+name=Rollup_Side_East type=PUSH_BUTTON up_pin=7 down_pin=8 stop_pin=25
+name=Rollup_Side_West type=PUSH_BUTTON up_pin=21 down_pin=20 stop_pin=16
+name=Rollup_Side_West type=PUSH_BUTTON up_pin=24 down_pin=23 stop_pin=18
