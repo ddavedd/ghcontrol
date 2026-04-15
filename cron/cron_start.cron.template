@@ -1,0 +1,2 @@
+USER=$(id -un)
+CRON_LOG=/home/USERNAME/ghcontrol/cron.log

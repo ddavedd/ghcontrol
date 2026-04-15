@@ -1,0 +1,5 @@
+29,59 * * * * /home/USERNAME/ghcontrol/temperature_files/graph_current_date.sh &>> $CRON_LOG 2>&1
+1,31 * * * * /usr/bin/python3 /home/USERNAME/ghcontrol/report_upload/create_index.py &>> $CRON_LOG 2>&1
+2,32 * * * * /home/USERNAME/ghcontrol/report_upload/upload_daily_report.sh &>> $CRON_LOG 2>&1
+0 23 * * * /home/USERNAME/ghcontrol/temperature_files/graph_all_temp_files.sh &>> $CRON_LOG 2>&1
+5 23 * * 0 /home/USERNAME/ghcontrol/report_upload/upload_all_reports.sh &>> $CRON_LOG 2>&1
