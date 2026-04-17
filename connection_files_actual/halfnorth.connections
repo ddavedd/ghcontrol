@@ -1,28 +1,28 @@
-name=Jet_Bay_1 category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=1,1 relay2=1,2 is_485=True
-name=Jet_Bay_3 category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=1,3 relay2=2,1 is_485=True
-name=Jet_Bay_5 category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=2,2 relay2=2,3 is_485=True
-name=Heater_Bay_1_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=3,1 is_485=True
-name=Heater_Bay_3_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=3,2 is_485=True
-name=Heater_Bay_5_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=3,3 is_485=True
-name=Heater_Bay_1_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,1
-name=Heater_Bay_1_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,2
-name=Heater_Bay_3_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,3
-name=Heater_Bay_3_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,4
-name=Heater_Bay_5_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
-name=Heater_Bay_5_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6
+name=Jet_Bay_1 category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=3,2 relay2=3,3 is_485=True
+name=Jet_Bay_3 category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=3,1 relay2=2,3 is_485=True
+name=Jet_Bay_5 category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=2,2 relay2=2,1 is_485=True
+name=Heater_Bay_1_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1 is_485=True
+name=Heater_Bay_3_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,2 is_485=True
+name=Heater_Bay_5_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,3 is_485=True
+name=Heater_Bay_1_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=1,2
+name=Heater_Bay_1_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=1,1
+name=Heater_Bay_3_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=2,1
+name=Heater_Bay_3_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=2,2
+name=Heater_Bay_5_East_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=2,3
+name=Heater_Bay_5_West_Tstat category=Tstats type=ON_OFF_SINGLE relay_board_type=8 relay1=2,4
 name=Exterior_Motor_West category=Exterior_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=4,1 is_485=True
 name=Exterior_Motor_Mid category=Exterior_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=4,2 is_485=True
 name=Exterior_Motor_East category=Exterior_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=4,3 is_485=True
-name=Louver_Bay_1 category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=5,1 is_485=True
-name=Louver_Bay_3 category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=5,2 is_485=True
-name=Louver_Bay_5 category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=5,3 is_485=True
+name=Louver_Bay_1 category=Airflow type=ON_OFF_SINGLE relay_board_type=8 relay1=0,8
+name=Louver_Bay_3 category=Airflow type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6
+name=Louver_Bay_5 category=Airflow type=ON_OFF_SINGLE relay_board_type=8 relay1=0,1
 name=Ridge_Bay_1 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=6,1 is_485=True
 name=Ridge_Bay_2 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=6,2 is_485=True
 name=Ridge_Bay_3 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=6,3 is_485=True
 name=Ridge_Bay_4 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,1 is_485=True
 name=Ridge_Bay_5 category=Ridge_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,2 is_485=True
 name=Shade_Motor category=Shade_Motors type=ON_OFF_SINGLE relay_board_type=3 relay1=7,3 is_485=True
-name=Rollup_Side_Enable category=Rollups type=ON_OFF_SINGLE relay_board_type=8 relay1=1,1
+name=Rollup_Side_Enable category=Rollups type=ON_OFF_SINGLE relay_board_type=8 relay1=1,2
 name=Rollup_Side_East category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,7 relay2=0,5 name_style=updownstop
 name=Rollup_Side_West category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,4 relay2=0,2 name_style=updownstop
 name=Rollup_Side_East type=PUSH_BUTTON up_pin=7 down_pin=8 stop_pin=25
