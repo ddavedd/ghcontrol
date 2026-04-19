@@ -1,2 +1,1 @@
 USER=$(id -un)
-CRON_LOG=/home/$USER/ghcontrol/logs/$(date +"%F").cron.log
