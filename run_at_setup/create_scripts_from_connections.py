@@ -25,7 +25,7 @@ def log_event(username, event_description, relay_description):
 
 def activate_relay(board_type, board_number, relay_number, relay_value, is_485=False):
    if is_485:
-      return "/usr/local/bin/%irelind %i mwrite %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
+      return "/usr/local/bin/%irelind %i mwrite %i %i\n/usr/bin/sleep .5s\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
    else:
       return "/usr/local/bin/%irelind %i write %i %i\n" % (int(board_type), int(board_number), int(relay_number), int(relay_value))
    
