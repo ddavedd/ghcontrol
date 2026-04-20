@@ -1,5 +1,5 @@
-/home/${USER}/ghcontrol/templates/clean_scripts_directory_desktop_entries.sh
-/usr/bin/python3 /home/${USER}/ghcontrol/templates/get_status.template.py
+/home/${USER}/ghcontrol/run_at_setup/clean_scripts_directory_desktop_entries.sh
+/usr/bin/python3 /home/${USER}/ghcontrol/run_at_setup/get_status.template.py
 sed "s/USERNAME/${USER}/g" /home/${USER}/ghcontrol/templates/log_event.sh.template > /home/${USER}/ghcontrol/scripts/log_event.sh
 sed "s/USERNAME/${USER}/g" /home/${USER}/ghcontrol/templates/watchdog_setup.shell.template > /home/${USER}/ghcontrol/run_at_setup/watchdog_setup.shell
 chmod +x /home/${USER}/ghcontrol/run_at_setup/watchdog_setup.shell

@@ -1,6 +1,6 @@
 scripts/*.sh
 logs/*.log
-gh_schedule.cron
+cron/*.cron
 on_reset/buttons_setup.py
 run_at_setup/watchdog_setup.shell
 *.tempf
