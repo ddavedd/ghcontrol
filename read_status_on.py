@@ -3,11 +3,11 @@ import os
 import subprocess
 username = os.getlogin()
 
-with open("/home/%s/ghcontrol/%s_comp_read.map" % (username,username)) as f:
+with open("/home/%s/ghcontrol/maps/%s_comp_read.map" % (username,username)) as f:
    connections = f.readlines()
 
 if len(connections)>0:
-   total_string = ""
+   total_string = "Status: "
    for c in connections:
       x = c.strip().split(',')
       mread = x[4]
