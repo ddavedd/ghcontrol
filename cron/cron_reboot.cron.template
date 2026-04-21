@@ -1,6 +1,6 @@
 @reboot /home/USERNAME/ghcontrol/scripts/log_event.sh "Started USERNAME computer, cron log is CRON_LOG"
 @reboot sleep 5s && /usr/bin/eom /home/USERNAME/ghcontrol/temperature_files/png/current.png
-@reboot sleep 7s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/heater_restart.py >> CRON_LOG 2>&1
-@reboot sleep 9s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/temperature_read.py >> CRON_LOG 2>&1
-@reboot sleep 11s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/control_temp.py >> /home/USERNAME/ghcontrol/logs/$(date "+%F").control.log 2>&1
+@reboot sleep 7s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/heater_restart.sh >> CRON_LOG 2>&1
+@reboot sleep 9s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/temperature_read.sh >> CRON_LOG 2>&1
+@reboot sleep 11s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/control_temp.sh >> /home/USERNAME/ghcontrol/logs/$(date "+%F").control.log 2>&1
 @reboot sleep 13s && /usr/bin/python3 /home/USERNAME/ghcontrol/on_reset/buttons_setup.py >> CRON_LOG 2>&1
