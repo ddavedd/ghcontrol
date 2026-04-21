@@ -1,1 +1,1 @@
-USER=$(id -un)
+# Assembled automatically from templates
