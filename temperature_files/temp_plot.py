@@ -158,7 +158,7 @@ maximum = max([max(y) for y in yvals])
 ax.set_ylim(minimum,maximum)
 # Labels and legend
 ax.grid(visible=True)
-ax.set_title(username + " " current_date_string)
+ax.set_title(username + " " + current_date_string)
 ax.set_xlabel(current_date_string)
 ax.set_ylabel("Temperature Fahrenheit")
 ax.legend()
