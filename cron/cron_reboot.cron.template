@@ -1,5 +1,5 @@
 @reboot /home/USERNAME/ghcontrol/scripts/log_event.sh "Started USERNAME computer, cron log is CRON_LOG"
-@reboot sleep 7s && /home/USERNAME/ghcontrol/on_reset/heater_restart.sh &>> CRON_LOG
-@reboot sleep 9s && /home/USERNAME/ghcontrol/on_reset/temperature_read.sh &>> CRON_LOG
-@reboot sleep 11s && /home/USERNAME/ghcontrol/on_reset/control_temp.sh &>> CRON_LOG.control
-@reboot sleep 13s &&  /home/USERNAME/ghcontrol/on_reset/buttons_setup.sh &>> CRON_LOG
+@reboot sleep 7s && /home/USERNAME/ghcontrol/on_reset/heater_restart.sh >> CRON_LOG
+@reboot sleep 9s && /home/USERNAME/ghcontrol/on_reset/temperature_read.sh >> CRON_LOG
+@reboot sleep 11s && /home/USERNAME/ghcontrol/on_reset/control_temp.sh >> CRON_LOG.control
+@reboot sleep 13s &&  /home/USERNAME/ghcontrol/on_reset/buttons_setup.sh >> CRON_LOG
