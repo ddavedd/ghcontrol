@@ -35,6 +35,10 @@ for c in control_values:
 	controls.append({'is_on': False, 'temp': temp, 'diff': diff, 'on_script': script_on, 'off_script': script_off, "higher": higher})
 
 print(controls)
+print("On reset, turn controls off automatically to return to original state")
+for c in controls:
+   call_script(c['off_script'])
+   
 # TODO check time to see if the temperatures are current (within last 60 secs?)
 while(True):
 	try:
