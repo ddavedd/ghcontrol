@@ -13,7 +13,7 @@ if len(connections)>0:
       mread = x[4]
       if mread == "True":
          read_string = "mread"
-         time.sleep(1)
+         time.sleep(.25)
       else:
          read_string = "read"
       print(x)
