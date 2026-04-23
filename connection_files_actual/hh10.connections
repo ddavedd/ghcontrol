@@ -3,11 +3,10 @@ name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,3
 name=Heater_West category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,3
 name=Heater_West_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6
 name=Rollup_Side_Enable category=Rollups type=ON_OFF_SINGLE relay_board_type=8 relay1=0,8
-name=Rollup_Side_East category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,1 relay2=0,2 name_style=updownstop
-name=Rollup_Side_West category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4 name_style=updownstop
+name=Rollup_Side_East category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4 name_style=updownstop
+name=Rollup_Side_West category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,2 relay2=0,1 name_style=updownstop
 name=Water_1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
 name=Rollup_Side_East type=PUSH_BUTTON up_pin=17 down_pin=18 stop_pin=24
 name=Rollup_Side_West type=PUSH_BUTTON up_pin=25 down_pin=5 stop_pin=6
 name=PressureSensor1 type=PRESSURE_SENSOR analog_pin=A0
 name=FlowMeter1 type=FLOW_METER digital_pin=3
-
