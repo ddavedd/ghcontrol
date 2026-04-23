@@ -16,4 +16,3 @@ name=Rollup_Side_East type=PUSH_BUTTON up_pin=7 down_pin=8 stop_pin=25
 name=Rollup_Side_West type=PUSH_BUTTON up_pin=21 down_pin=20 stop_pin=16
 name=PressureSensor1 type=PRESSURE_SENSOR analog_pin=A0
 name=FlowMeter1 type=FLOW_METER digital_pin=3
-
