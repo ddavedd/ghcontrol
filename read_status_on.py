@@ -16,8 +16,8 @@ if len(connections)>0:
          time.sleep(.25)
       else:
          read_string = "read"
-      print(x)
-      print(read_string)
+      print(x,file=sys.stderr)
+      print(read_string,file=sys.stderr)
       if int(subprocess.check_output("%irelind %i %s %i" % (int(x[0]), int(x[1]), read_string, int(x[2])), shell=True)) == 1:
          total_string += x[3] + " " + x[5] + " | "
    print(total_string)
