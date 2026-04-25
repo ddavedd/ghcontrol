@@ -1,0 +1,4 @@
++ 78.0 2.0 Exhaust_Fan_Low_On.sh Exhaust_Fan_Low_Off.sh
++ 74.0 2.0 Exhaust_Fan_High_On.sh Exhaust_Fan_High_Off.sh
++ 70.0 2.0 Louver_On.sh Louver_Off.sh 
+- 56.0 4.0 Heater_North_Tstat_On.sh Heater_North_Tstat_Off.sh
