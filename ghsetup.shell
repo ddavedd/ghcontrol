@@ -54,3 +54,5 @@ ln -s /home/${USER}/ghcontrol/.msmtprc /home/${USER}/.msmtprc
 chmod 600 /home/${USER}/ghcontrol/.msmtprc
 ~/ghcontrol/run_at_setup/setup_scripts.shell
 ~/ghcontrol/run_at_setup/watchdog_setup.shell
+~/ghcontrol/run_at_setup/create_menus.sh
+~/ghcontrol/run_at_setup/install_cron.sh
