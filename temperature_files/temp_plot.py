@@ -125,7 +125,7 @@ for i in range(len(yvals)):
       alpha = 1.0
       color = "blue"
       linewidth = 1
-      label = "Average Temp"
+      label = None
 #   else:
 #      alpha = .80
 #      color = "green"
@@ -175,7 +175,5 @@ rs.append(draw_top_fan(ax,times))
 #ax.legend(handles=rs)
 print([r.get_label() for r in rs])
 # Save image
-fig.set_size_inches(4,1)
-fig.savefig('/home/%s/ghcontrol/temperature_files/png/%s.small.png' % (username, current_date_string), dpi=DPI_PNG)
 fig.set_size_inches(12,3)
 fig.savefig('/home/%s/ghcontrol/temperature_files/png/%s.png' % (username, current_date_string), dpi=DPI_PNG)
