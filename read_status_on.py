@@ -1,6 +1,7 @@
 import time
 import os
 import subprocess
+import sys
 username = os.getlogin()
 
 with open("/home/%s/ghcontrol/maps/%s_comp_read.map" % (username,username)) as f:
@@ -20,5 +21,5 @@ if len(connections)>0:
       print(read_string,file=sys.stderr)
       if int(subprocess.check_output("%irelind %i %s %i" % (int(x[0]), int(x[1]), read_string, int(x[2])), shell=True)) == 1:
          total_string += x[3] + " " + x[5] + " | "
+   print(total_string,file=sys.stderr)
    print(total_string)
-
