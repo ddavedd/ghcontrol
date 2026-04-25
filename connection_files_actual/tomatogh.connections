@@ -5,8 +5,7 @@ name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1
 name=Heater_North_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,2
 name=Heater_North_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
 name=Heater_South_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6
-name=Louver_12v_unused category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,5 name_style=openclosestop
-name=Louver category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4 name_style=openclosestop
+name=Louver_12v_unused category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4 name_style=openclosestop
 name=Rollup_Side_Enable category=Rollups type=ON_OFF_SINGLE relay_board_type=8 relay1=1,1
 name=Rollup_Side_West category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,1 relay2=0,2 name_style=updownstop
 name=Rollup_Side_East category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,8 relay2=0,7 name_style=updownstop
