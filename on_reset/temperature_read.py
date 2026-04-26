@@ -1,3 +1,4 @@
+"""Read temperature sensors and write them to the temperature file"""
 #!/usr/bin/python3
 import os
 import glob
@@ -8,51 +9,53 @@ TIME_BETWEEN_READINGS = 14.0
 WAIT_DELAY = .2
 WRITE_APPEND = "a"
 OVERWRITE = "w"
+USERNAME = os.getlogin()
+BASE_DIR = '/sys/bus/w1/devices/'
 
-def read_temp_raw(device_file):
-   lines = ""
-   with open(device_file, 'r') as f:
-      lines = f.readlines()
-   return lines
+def read_temp_raw(temp_device_file):
+    """read the device and return its raw value"""
+    lines = ""
+    with open(temp_device_file, 'r', encoding="utf-8") as temp_f:
+        lines = temp_f.readlines()
+    return lines
 
-def read_temp(device_file):
-   lines = read_temp_raw(device_file)
-   # IF unsecessful read, try one more time
-   if lines[0].strip()[-3:] != 'YES':
-      time.sleep(WAIT_DELAY)
-      lines = read_temp_raw(device_file)
-   equals_pos = lines[1].find('t=')
-   if equals_pos != -1:
-      temp_string = lines[1][equals_pos+2:]
-      #print(temp_string)
-      temp_c = float(temp_string) / 1000.0
-      temp_f = temp_c * 9.0 / 5.0 + 32.0
-      if temp_f > MAX_TEMP:
-         temp_f = 70.0
-      return temp_f
-   # If things go wrong, send back an extreme value
-   return -100.0
+def read_temp(temp_device_file):
+    """Read the device, discard excess info, and return temp in fahrenheit"""
+    lines = read_temp_raw(temp_device_file)
+    # IF unsecessful read, try one more time
+    if lines[0].strip()[-3:] != 'YES':
+        time.sleep(WAIT_DELAY)
+        lines = read_temp_raw(temp_device_file)
+    equals_pos = lines[1].find('t=')
+    if equals_pos != -1:
+        temp_string = lines[1][equals_pos+2:]
+        temp_c = float(temp_string) / 1000.0
+        temp_f = temp_c * 9.0 / 5.0 + 32.0
+        if temp_f > MAX_TEMP: # Send back a value that won't throw off averages too much
+            temp_f = 70.0
+        return temp_f
+    # If things go wrong, send back an extreme value
+    return -100.0
 
-username = os.getlogin()
-base_dir = '/sys/bus/w1/devices/'
 device_files = []
-if len(glob.glob(base_dir+'28*')) > 0:
-   for therm in glob.glob(base_dir + '28*'):
-      device_files.append(therm + '/w1_slave')
+if len(glob.glob(BASE_DIR+'28*')) > 0:
+    for therm in glob.glob(BASE_DIR+'28*'):
+        device_files.append(therm + '/w1_slave')
 
 if len(device_files) > 0:
-   while True:
-      line = ""
-      filename = "/home/%s/ghcontrol/temperature_files/tempf/%s.tempf" % (username, datetime.datetime.now().strftime("%Y-%m-%d"))
-      filename_current = "/home/%s/ghcontrol/temperature_files/tempf/current.tempf" % (username)
-      line += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-      for device_file in device_files:
-         line += " %.1f" % read_temp(device_file)
-      line += "\n"
-      with open(filename, WRITE_APPEND) as f:
-         f.write(line)
-      with open(filename_current, OVERWRITE) as f:
-         f.write(line)
-      time.sleep(TIME_BETWEEN_READINGS)
+    while True:
+        line = ""
+        date_string = datetime.datetime.now().strftime("%Y-%m-%d")
+        tempf_directory = "/home/{USERNAME}/ghcontrol/temperature_files/tempf"
+        filename = "{tempf_directory}/{date_string}.tempf"
+        filename_current = "{tempf_directory}/current.tempf"
+        line += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        for device_file in device_files:
+            line += " {read_temp(device_file):.1}"
+        line += "\n"
+        with open(filename, WRITE_APPEND, encoding="utf-8") as f:
+            f.write(line)
+        with open(filename_current, OVERWRITE, encoding="utf-8") as f:
+            f.write(line)
+        time.sleep(TIME_BETWEEN_READINGS)
 print("No temperature sensors or something went wrong inside read loop")
-
