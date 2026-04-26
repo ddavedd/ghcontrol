@@ -17,8 +17,8 @@ def create_menu_entry(username, menu_name):
 def create_menus(username, names):
     """Create full menu"""
     create_menu_entry(username, "Greenhouse")
-    for name in names:
-        create_menu_entry(username, name)
+    for menu_name in names:
+        create_menu_entry(username, menu_name)
 
 def get_filename(event_description, relay_description):
     """Make filename out of event + relay description"""
@@ -28,9 +28,9 @@ def log_event(username, event_description, relay_description):
     """Log the event"""
     return f"/home/{username}/ghcontrol/scripts/log_event.sh \"{event_description} {relay_description}\"\n"
 
-def activate_relay(board_type, board_number, relay_number, relay_value, is_485=False):
+def activate_relay(board_type, board_number, relay_number, relay_value, relay_is_485=False):
     """Activate relay 8relind or 3relind"""
-    if is_485:
+    if relay_is_485:
         return f"/usr/local/bin/{board_type}relind {board_number} mwrite {relay_number} {relay_value}\n/usr/bin/sleep .5s\n"
     return f"/usr/local/bin/{board_type}relind {board_number} write {relay_number} {relay_value}\n"
 
@@ -42,18 +42,18 @@ def create_desktop_launcher(username, script_dir, event_description, relay_descr
     launcher_file_name = f"/home/{username}/.local/share/applications/{event_description}_{relay_description}"
     write_file(launcher_file_name, launcher_text, ".desktop")
 
-def write_file(file_name, file_text, file_ending=".sh"):
+def write_file(writefile_name, writefile_text, file_ending=".sh"):
     """Write a file to computer"""
-    print(file_name + file_ending)
-    with open(file_name+file_ending, 'w') as f:
-        f.write(file_text)
-    print(file_text)
+    print(writefile_name + file_ending)
+    with open(writefile_name+file_ending, 'w', encoding="utf-8") as f:
+        f.write(writefile_text)
+    print(writefile_text)
 
-def add_to_category(cat_dict, category_name, file_name, file_ending=".sh"):
+def add_to_category(cat_dict, category_name, category_file_name, file_ending=".sh"):
     """Add to a category"""
     if category_name not in cat_dict:
         cat_dict[category_name] = []
-    cat_dict[category_name].append(file_name)
+    cat_dict[category_name].append(category_file_name)
     return cat_dict
 
 def create_xml_menu(cat_dict):
@@ -90,8 +90,10 @@ relay_map = {"8": [], "3": [], "PI_PINS": [], "ARDUINO_PINS": [],}
 menu_cats = {}
 scripts_dir = f"/home/{USER}/ghcontrol/scripts/"
 categories = []
+
 with open(f"/home/{USER}/ghcontrol/connection_files_actual/{USER}.connections", encoding="utf-8") as connections:
     lines = connections.readlines()
+
 for l in lines:
     line_dict = {}
     print(l)
@@ -100,13 +102,14 @@ for l in lines:
         split_item = i.split('=')
         line_dict[split_item[0]] = split_item[1]
     print(line_dict)
-    if 'is_485' in line_dict.keys():
-        is_485 = True
-    else:
-        is_485 = False
+    is_485 = bool('is_485' in line_dict) #.keys())
+    #if 'is_485' in line_dict.keys():
+    #    is_485 = True
+    #else:
+    #    is_485 = False
     match line_dict['type']:
         case "ON_OFF_SINGLE":
-            if "normally_closed" in line_dict.keys():
+            if "normally_closed" in line_dict: #.keys():
                 relay_type = [["On",0],["Off",1]]
                 relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485, "OFF"])
             else:
@@ -137,7 +140,7 @@ for l in lines:
                 create_desktop_launcher(USER, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
                 menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
         case "REVERSING_PAIR": ###
-            if 'name_style' in line_dict.keys():
+            if 'name_style' in line_dict: #.keys():
                 if line_dict['name_style'] == "updownstop":
                     relay_type = [["Up",1,0],["Down",0,1],["Stop",0,0]]
                 elif line_dict['name_style'] == "openclosestop":
@@ -171,7 +174,7 @@ for l in lines:
             for b in buttons:
                 pin_number = b[1]
                 up_down_stop = b[0]
-                buttons_function_text += "def button_callback_%s():\n" % pin_number
+                buttons_function_text += f"def button_callback_{pin_number}():\n"
                 buttons_function_text += f"\tos.system(\"{scripts_dir + "log_event.sh"} '{pin_number} Button Pressed, {line_dict['name']} {up_down_stop}'\")\n"
                 buttons_function_text += f"\tos.system(\"{scripts_dir + line_dict['name'] + "_" +  up_down_stop}.sh\")\n\n"
                 buttons_setup_text += f"button_{pin_number} = Button(pin={pin_number}, pull_up=False,hold_time=.5)\n"
@@ -187,15 +190,17 @@ for l in lines:
         #file_text += log_event(USER, line_dict['name'], "Pushed")
         #write_file(scripts_dir + file_name, file_text)
         case _:
-            print(f"RELAY TYPE NOT SUPPORTED: {c[EVENT_TYPE]}")
-end_text = "pause()\n"#"message = input(\"Press Enter to Quit\\n\")\n"
-write_file(f"/home/{USER}/ghcontrol/on_reset/buttons_setup", buttons_function_text + buttons_setup_text + end_text, ".py")
+            print(f"RELAY TYPE NOT SUPPORTED: {line_dict['type']}")
+END_TEXT = "pause()\n"#"message = input(\"Press Enter to Quit\\n\")\n"
+write_file(f"/home/{USER}/ghcontrol/on_reset/buttons_setup", buttons_function_text + buttons_setup_text + END_TEXT, ".py")
 
 create_directory_entries(USER, menu_cats.items())
 subcats = create_xml_menu(sorted(menu_cats.items()))
 create_directory_entries(USER, {"Greenhouse": []}.items())
-total_menu_xml = open(f"/home/{USER}/ghcontrol/templates/raspi_menu_start.xml").read() + subcats + open(f"/home/{USER}/ghcontrol/templates/raspi_menu_end.xml").read()
-write_file(f"/home/{USER}/.config/menus/rpd-applications", total_menu_xml,".menu")
+START_MENU_XML = open(f"/home/{USER}/ghcontrol/templates/raspi_menu_start.xml", encoding="utf-8").read()
+END_MENU_XML = open(f"/home/{USER}/ghcontrol/templates/raspi_menu_end.xml", encoding="utf-8").read()
+total_menu_xml = START_MENU_XML + subcats + END_MENU_XML
+write_file(f"/home/{USER}/.config/menus/rpd-applications", total_menu_xml, ".menu")
 
 def write_map_category(map_category, description):
     """Write the human readable map for connections"""
