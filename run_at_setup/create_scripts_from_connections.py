@@ -78,7 +78,7 @@ def create_directory_entries(username, cat_dict):
     """Create the desktop entries for the menu"""
     directory_entry_location = f"/home/{username}/.local/share/desktop-directories/"
     for key,val in cat_dict:
-        directory_text = "[Desktop Entry]\nName={key}\nComment=\nIcon=folder\nType=Directory\n"
+        directory_text = f"[Desktop Entry]\nName={key}\nComment=\nIcon=folder\nType=Directory\n"
         write_file(directory_entry_location + key, directory_text,".directory")
 
 USER = os.getlogin()
