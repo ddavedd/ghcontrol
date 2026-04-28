@@ -37,7 +37,7 @@ name=Exhaust_6 category=Exhausts type=REMOTE user=halfsouth host=halfsouth.lan n
 name=Exhaust_7 category=Exhausts type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
 name=Exhaust_8 category=Exhausts type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
 name=Heater_Bay_2_Enable category=Heaters_Enable type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
-name=Heater_Bay_4 Enable category=Heaters_Enable type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
+name=Heater_Bay_4_Enable category=Heaters_Enable type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
 name=Jet_Bay_2 category=Jet type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
 name=Jet_Bay_4 category=Jet type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
 name=Louver_Bay_2 category=Louver type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
