@@ -43,4 +43,3 @@ name=Jet_Bay_4 category=Jet type=REMOTE user=halfsouth host=halfsouth.lan name_s
 name=Louver_Bay_2 category=Louver type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
 name=Louver_Bay_4 category=Louver type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
 name=Water_Bay_1 category=Water type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off
-
