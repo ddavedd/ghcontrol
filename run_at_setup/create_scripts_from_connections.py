@@ -86,9 +86,9 @@ buttons_setup_text = ""
 buttons_function_text = "import os\n"
 buttons_function_text += "from gpiozero import Button\n"
 buttons_function_text += "from signal import pause\n\n"
-relay_map = {"8": [], "3": [], "PI_PINS": [], "ARDUINO_PINS": [],}
+relay_map = {"8": [], "3": [], "PI_PINS": [], "ARDUINO_PINS": [], "REMOTE": []}
 menu_cats = {}
-scripts_dir = f"/home/{USER}/ghcontrol/scripts/"
+SCRIPTS_DIR = f"/home/{USER}/ghcontrol/scripts/"
 categories = []
 
 with open(f"/home/{USER}/ghcontrol/connection_files_actual/{USER}.connections", encoding="utf-8") as connections:
@@ -121,8 +121,8 @@ for l in lines:
                 file_text = SCRIPT_LINE
                 file_text += log_event(USER, line_dict['name'], r[RELAY_DESCRIPTION])
                 file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE], is_485)
-                write_file(scripts_dir + file_name, file_text)
-                create_desktop_launcher(USER, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
+                write_file(SCRIPTS_DIR + file_name, file_text)
+                create_desktop_launcher(USER, SCRIPTS_DIR, line_dict['name'], r[RELAY_DESCRIPTION])
                 menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
         case "ON_OFF_DOUBLE":
             relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485, "ON"])
@@ -136,8 +136,8 @@ for l in lines:
                 file_text += log_event(USER, line_dict['name'], r[RELAY_DESCRIPTION])
                 file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE], is_485)
                 file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE], is_485)
-                write_file(scripts_dir + file_name, file_text)
-                create_desktop_launcher(USER, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
+                write_file(SCRIPTS_DIR + file_name, file_text)
+                create_desktop_launcher(USER, SCRIPTS_DIR, line_dict['name'], r[RELAY_DESCRIPTION])
                 menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
         case "REVERSING_PAIR": ###
             if 'name_style' in line_dict: #.keys():
@@ -159,8 +159,8 @@ for l in lines:
                 file_text += log_event(USER, line_dict['name'], r[RELAY_DESCRIPTION])
                 file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE], is_485)
                 file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE_REVERSER], is_485)
-                write_file(scripts_dir + file_name, file_text)
-                create_desktop_launcher(USER, scripts_dir, line_dict['name'], r[RELAY_DESCRIPTION])
+                write_file(SCRIPTS_DIR + file_name, file_text)
+                create_desktop_launcher(USER, SCRIPTS_DIR, line_dict['name'], r[RELAY_DESCRIPTION])
                 menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
         case "PUSH_BUTTON":
             name = line_dict['name']
@@ -175,8 +175,8 @@ for l in lines:
                 pin_number = b[1]
                 up_down_stop = b[0]
                 buttons_function_text += f"def button_callback_{pin_number}():\n"
-                buttons_function_text += f"\tos.system(\"{scripts_dir + "log_event.sh"} '{pin_number} Button Pressed, {line_dict['name']} {up_down_stop}'\")\n"
-                buttons_function_text += f"\tos.system(\"{scripts_dir + line_dict['name'] + "_" +  up_down_stop}.sh\")\n\n"
+                buttons_function_text += f"\tos.system(\"{SCRIPTS_DIR + "log_event.sh"} '{pin_number} Button Pressed, {line_dict['name']} {up_down_stop}'\")\n"
+                buttons_function_text += f"\tos.system(\"{SCRIPTS_DIR + line_dict['name'] + "_" +  up_down_stop}.sh\")\n\n"
                 buttons_setup_text += f"button_{pin_number} = Button(pin={pin_number}, pull_up=False,hold_time=.5)\n"
                 buttons_setup_text += f"button_{pin_number}.when_held = button_callback_{pin_number}\n\n"
         case "PRESSURE_SENSOR":
@@ -188,9 +188,33 @@ for l in lines:
         #file_name = get_filename(line_dict['name'], "Pushed")
         #file_text = SCRIPT_LINE
         #file_text += log_event(USER, line_dict['name'], "Pushed")
-        #write_file(scripts_dir + file_name, file_text)
+        #write_file(SCRIPTS_DIR + file_name, file_text)
+        case "REMOTE":
+            endings = []
+            if line_dict['name_style'] == "On_Off":
+                endings = ["On", "Off"]
+            elif line_dict['name_style'] == "Up_Down_Stop":
+                endings = ["Up", "Down", "Stop"]
+            elif line_dict['name_style'] == "Open_Close_Stop":
+                endings = ["Open", "Close", "Stop"]
+            else:
+                endings = []
+            print(endings)
+            for ending in endings:
+                host = line_dict['host']
+                user = line_dict['user']
+                name = line_dict['name']
+                file_name = get_filename(name, ending)
+                file_text = f"ssh {user}@{host} ./ghcontrol/scripts/{name}_{ending}.sh"
+                write_file(SCRIPTS_DIR + file_name, file_text)
+                print(len(relay_map["REMOTE"]))
+                relay_map["REMOTE"].append([name, ending])
+                print(len(relay_map["REMOTE"]))
+                create_desktop_launcher(USER, SCRIPTS_DIR, name, ending)
+                menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
         case _:
             print(f"RELAY TYPE NOT SUPPORTED: {line_dict['type']}")
+
 END_TEXT = "pause()\n"#"message = input(\"Press Enter to Quit\\n\")\n"
 write_file(f"/home/{USER}/ghcontrol/on_reset/buttons_setup", buttons_function_text + buttons_setup_text + END_TEXT, ".py")
 
@@ -223,6 +247,7 @@ total_map_text = write_map_category(relay_map["8"], "8 Relay Board")
 total_map_text += write_map_category(relay_map["3"], "3 Relay Board")
 total_map_text += write_map_category(relay_map["PI_PINS"], "Raspberry Pi GPIO Pins")
 total_map_text += write_map_category(relay_map["ARDUINO_PINS"], "Arduino Pins")
+total_map_text += write_map_category(relay_map["REMOTE"], "Remote Scripts")
 print(total_map_text)
 write_file(f"/home/{USER}/ghcontrol/maps/{USER}_connections", total_map_text, ".map")
 write_file(f"/home/{USER}/ghcontrol/maps/{USER}_comp_read", comp_map_text, ".map")
