@@ -205,11 +205,11 @@ for l in lines:
                 user = line_dict['user']
                 name = line_dict['name']
                 file_name = get_filename(name, ending)
-                file_text = f"ssh {user}@{host} ./ghcontrol/scripts/{name}_{ending}.sh"
+                file_text = "#! /usr/bin/bash\n"
+                file_text += log_event(USER, f"REMOTE CALL {name}", ending)
+                file_text += f"ssh {user}@{host} ./ghcontrol/scripts/{name}_{ending}.sh"
                 write_file(SCRIPTS_DIR + file_name, file_text)
-                print(len(relay_map["REMOTE"]))
                 relay_map["REMOTE"].append([name, ending])
-                print(len(relay_map["REMOTE"]))
                 create_desktop_launcher(USER, SCRIPTS_DIR, name, ending)
                 menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
         case _:
