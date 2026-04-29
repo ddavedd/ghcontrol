@@ -51,7 +51,7 @@ if len(device_files) > 0:
         filename_current = f"{tempf_directory}/current.tempf"
         line += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         for device_file in device_files:
-            line += f" {read_temp(device_file):.1}"
+            line += f" {read_temp(device_file):.1f}"
         line += "\n"
         with open(filename, WRITE_APPEND, encoding="utf-8") as f:
             f.write(line)
