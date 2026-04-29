@@ -46,12 +46,12 @@ if len(device_files) > 0:
     while True:
         line = ""
         date_string = datetime.datetime.now().strftime("%Y-%m-%d")
-        tempf_directory = "/home/{USERNAME}/ghcontrol/temperature_files/tempf"
-        filename = "{tempf_directory}/{date_string}.tempf"
-        filename_current = "{tempf_directory}/current.tempf"
+        tempf_directory = f"/home/{USERNAME}/ghcontrol/temperature_files/tempf"
+        filename = f"{tempf_directory}/{date_string}.tempf"
+        filename_current = f"{tempf_directory}/current.tempf"
         line += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         for device_file in device_files:
-            line += " {read_temp(device_file):.1}"
+            line += f" {read_temp(device_file):.1}"
         line += "\n"
         with open(filename, WRITE_APPEND, encoding="utf-8") as f:
             f.write(line)
