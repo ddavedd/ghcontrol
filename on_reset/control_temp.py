@@ -2,6 +2,7 @@
 import os
 import datetime
 import time
+ON_INTERVAL = 5 # Seconds
 TIMEOUT_WARNING = 120 # Seconds
 HIGH_TEMP_ALERT_THRESHOLD = 94.0
 LOW_TEMP_ALERT_THRESHOLD = 38.0
@@ -107,10 +108,12 @@ while True:
                 if average_temp > c["temp"]:
                     call_script(c['on_script'])
                     c["is_on"] = True
+                    time.sleep(ON_INTERVAL)
             else: # c["higher"] == False
                 if average_temp < c["temp"]:
                     call_script(c['on_script'])
                     c["is_on"] = True
+                    time.sleep(ON_INTERVAL)
         else: # c["is_on"]
             if c["higher"]:
                 if average_temp < (c["temp"] - c["diff"]):
