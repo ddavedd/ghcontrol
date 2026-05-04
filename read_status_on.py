@@ -25,7 +25,7 @@ if len(connections)>0:
             read_string = "read"
         print(x,file=sys.stderr)
         print(read_string,file=sys.stderr)
-        if int(subprocess.check_output(f"{relay_board}relind {board_number} {read_string} {relay_number}", shell=True)) == 1:
+        if int(subprocess.check_output(f"/usr/local/bin/{relay_board}relind {board_number} {read_string} {relay_number}", shell=True)) == 1:
             total_string += f"{relay_name} {relay_on_off} | "
     print(total_string,file=sys.stderr)
     print(total_string)
