@@ -1,0 +1,3 @@
+# Rollup Side Enable Schedule
+20 7 * * * /home/USERNAME/ghcontrol/scripts/Rollup_Side_Enable_On.sh &>> CRON_LOG
+20 21 * * * /home/USERNAME/ghcontrol/scripts/Rollup_Side_Enable_Off.sh &>> CRON_LOG
