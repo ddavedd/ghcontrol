@@ -98,6 +98,8 @@ for l in lines:
     line_dict = {}
     print(l)
     items = l.split()
+    if len(l.split()) == 0:
+        break
     for i in items:
         split_item = i.split('=')
         line_dict[split_item[0]] = split_item[1]
