@@ -3,5 +3,11 @@ BUTTONS_FILE="buttons_setup.sh"
 TIME=$(date +%H:%M:%S)
 DATE=$(date +%Y-%m-%d)
 USER=$(id -un)
+FULL_PATH_FILE=/home/$USER/ghcontrol/on_reset/$BUTTONS_FILE
 LOGFILE=/home/$USER/ghcontrol/logs/$DATE.restart.log
-if pgrep -f $BUTTONS_FILE; then echo "$TIME $BUTTONS_FILE still running"; else echo "$TIME Restarting $BUTTONS_FILE"; fi >> $LOGFILE
+if pgrep -f $BUTTONS_FILE; then
+    echo "$TIME $BUTTONS_FILE still running"
+else 
+    echo "$TIME Restarting $BUTTONS_FILE"
+    /usr/bin/nohup /usr/bin/bash $FULL_PATH_FILE &
+fi >> $LOGFILE
