@@ -1,0 +1,4 @@
+# Restarting services if they have crashed, check on 12 and 42 of hour (plus sleep delay in case of reboot)
+12,42 * * * * /usr/bin/sleep 60s && /home/USERNAME/ghcontrol/on_reset/restart_temperature.sh
+12,42 * * * * /usr/bin/sleep 65s && /home/USERNAME/ghcontrol/on_reset/restart_control.sh
+12,42 * * * * /usr/bin/sleep 70s && /home/USERNAME/ghcontrol/on_reset/restart_buttons.sh
