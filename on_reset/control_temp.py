@@ -20,6 +20,7 @@ def call_script(script_name):
     if os.path.exists(script_path):
         os.system(script_path)
     else:
+        print(f"{script_name} can't be found, sending mail")
         call_alert("script_missing_mail.sh")
 
 def call_alert(alert_name):
