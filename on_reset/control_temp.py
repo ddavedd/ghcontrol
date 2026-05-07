@@ -17,7 +17,10 @@ def call_script(script_name):
     script_dir = f"/home/{USERNAME}/ghcontrol/scripts/"
     script_path = script_dir + script_name
     print(f"Control temp calling {script_name}")
-    os.system(script_path)
+    if os.path.exists(script_path):
+        os.system(script_path)
+    else:
+        call_alert("script_missing_mail.sh")
 
 def call_alert(alert_name):
     """Call script from scripts directory"""
