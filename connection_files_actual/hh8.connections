@@ -2,7 +2,7 @@ name=Exhaust_Fan category=Airflow type=ON_OFF_DOUBLE relay_board_type=3 relay1=0
 name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,3
 name=Heater_North_Enable category=Heaters type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1
 name=Heater_North_Tstat category=Heaters type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
-name=Louver_12v category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,3 relay2=0,4 name_style=openclosestop
+name=Louver_12v category=Airflow type=REVERSING_PAIR relay_board_type=8 relay1=0,4 relay2=0,3 name_style=openclosestop
 name=Rollup_Side_Enable category=Rollups type=ON_OFF_SINGLE relay_board_type=8 relay1=1,1
 name=Rollup_Side_East category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,7 relay2=0,8 name_style=updownstop
 name=Rollup_Side_West category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,2 relay2=0,1 name_style=updownstop
