@@ -28,11 +28,16 @@ def log_event(username, event_description, relay_description):
     """Log the event"""
     return f"/home/{username}/ghcontrol/scripts/log_event.sh \"{event_description} {relay_description}\"\n"
 
-def activate_relay(board_type, board_number, relay_number, relay_value, relay_is_485=False):
+def activate_relay(board_type, board_number, relay_number, relay_value, relay_is_485=False, timestamp_file_name=None, scripts_directory=None):
     """Activate relay 8relind or 3relind"""
+    start_text = f"/usr/local/bin/{board_type}relind {board_number}"
+    end_text = f"{relay_number} {relay_value}"
     if relay_is_485:
-        return f"/usr/local/bin/{board_type}relind {board_number} mwrite {relay_number} {relay_value}\n/usr/bin/sleep .5s\n"
-    return f"/usr/local/bin/{board_type}relind {board_number} write {relay_number} {relay_value}\n"
+        return f"{start_text} mwrite {end_text}\n/usr/bin/sleep .5s\n"
+    return f"{start_text} write {end_text}\n"
+
+def write_timestamp_file(timestamp_file_name, timestamp_directory):
+    return f"date +\"%F %T\" > {timestamp_directory}{timestamp_file_name}.timestamp\n"
 
 def create_desktop_launcher(username, script_dir, event_description, relay_description):
     """Create launcher for menu entries"""
@@ -161,6 +166,8 @@ for l in lines:
                 file_text += log_event(USER, line_dict['name'], r[RELAY_DESCRIPTION])
                 file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE], is_485)
                 file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE_REVERSER], is_485)
+                if r[1] + r[2] > 0: # If one of the relays is turned on (so don't write timestamp on a stop or off script
+                    file_text += write_timestamp_file(line_dict['name'], SCRIPTS_DIR)
                 write_file(SCRIPTS_DIR + file_name, file_text)
                 create_desktop_launcher(USER, SCRIPTS_DIR, line_dict['name'], r[RELAY_DESCRIPTION])
                 menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
