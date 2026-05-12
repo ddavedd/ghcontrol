@@ -164,8 +164,22 @@ for l in lines:
                 write_file(SCRIPTS_DIR + file_name, file_text)
                 create_desktop_launcher(USER, SCRIPTS_DIR, line_dict['name'], r[RELAY_DESCRIPTION])
                 menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
+        case "PUSH_BUTTON_SINGLE":
+            button_pin = line_dict['pin']
+            script_name = line_dict['script']
+            name = line_dict['name']
+            script_path_log_event = SCRIPTS_DIR + 'log_event.sh'
+            script_path_button = SCRIPTS_DIR + script_name
+            buttons_function_text += f"# {name} {button_pin} {script_name}\n"
+            buttons_function_text += f"def button_callback_{button_pin}():\n"
+            buttons_function_text += f"\tos.system(\"{script_path_log_event} '{button_pin} Button Pressed, Name: {name}, script: {script_name}'\")\n"
+            buttons_function_text += f"\tos.system(\"{script_path_button}\")\n\n"
+            buttons_setup_text += f"# {name} {button_pin} {script_name}\n"
+            buttons_setup_text += f"button_{button_pin} = Button(pin={button_pin}, pull_up=False, hold_time=.5)\n"
+            buttons_setup_text += f"button_{button_pin}.when_held = button_callback_{button_pin}\n\n"
         case "PUSH_BUTTON":
             name = line_dict['name']
+            script_path_log_event = SCRIPTS_DIR + "log_event.sh"
             up_pin, down_pin, stop_pin = line_dict["up_pin"], line_dict["down_pin"], line_dict["stop_pin"]
             relay_map["PI_PINS"].append([up_pin,name + "_UP"])
             relay_map["PI_PINS"].append([down_pin,name + "_DOWN"])
@@ -173,12 +187,14 @@ for l in lines:
 
             buttons = [["Up", up_pin],["Down",down_pin],["Stop",stop_pin]]
             stop_name = buttons[2][0]
+            
             for b in buttons:
                 pin_number = b[1]
                 up_down_stop = b[0]
+                script_path_button = f"{SCRIPTS_DIR + line_dict['name']}_{up_down_stop}.sh"
                 buttons_function_text += f"def button_callback_{pin_number}():\n"
-                buttons_function_text += f"\tos.system(\"{SCRIPTS_DIR + "log_event.sh"} '{pin_number} Button Pressed, {line_dict['name']} {up_down_stop}'\")\n"
-                buttons_function_text += f"\tos.system(\"{SCRIPTS_DIR + line_dict['name'] + "_" +  up_down_stop}.sh\")\n\n"
+                buttons_function_text += f"\tos.system(\"{script_path_log_event} '{pin_number} Button Pressed, {line_dict['name']} {up_down_stop}'\")\n"
+                buttons_function_text += f"\tos.system(\"{script_path_button}\")\n\n"
                 buttons_setup_text += f"button_{pin_number} = Button(pin={pin_number}, pull_up=False,hold_time=.5)\n"
                 buttons_setup_text += f"button_{pin_number}.when_held = button_callback_{pin_number}\n\n"
         case "PRESSURE_SENSOR":
