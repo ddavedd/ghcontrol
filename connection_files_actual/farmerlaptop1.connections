@@ -14,5 +14,5 @@ name=Rollup_Side_North type=PUSH_BUTTON up_pin=10 down_pin=11 stop_pin=12
 name=Rollup_Side_South type=PUSH_BUTTON up_pin=13 down_pin=14 stop_pin=15
 name=PressureSensor1 type=PRESSURE_SENSOR analog_pin=A01
 name=FlowMeter1 type=FLOW_METER digital_pin=2
-name=SingleButton type=PUSH_BUTTON_SINGLE button_pin=25
+name=SingleButton type=PUSH_BUTTON_SINGLE pin=25 script=fake.sh
 name=Exhaust_1 category=Exhausts type=REMOTE user=halfsouth host=halfsouth.lan name_style=On_Off

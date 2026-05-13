@@ -36,9 +36,12 @@ def activate_relay(board_type, board_number, relay_number, relay_value, relay_is
         return f"{start_text} mwrite {end_text}\n/usr/bin/sleep .5s\n"
     return f"{start_text} write {end_text}\n"
 
-def write_timestamp_file(timestamp_file_name, timestamp_directory):
-    return f"date +\"%F %T\" > {timestamp_directory}{timestamp_file_name}.timestamp\n"
-
+def write_timestamp_file(timestamp_file_name, timestamp_directory, stop_script):
+    timestamp_file = f"{timestamp_directory}{timestamp_file_name}.timestamp"
+    text = f"date +\"%F %T\" > {timestamp_file}\n"
+    text += f"echo {timestamp_file_name}_{stop_script}.sh >> {timestamp_file}\n"
+    return text
+    
 def create_desktop_launcher(username, script_dir, event_description, relay_description):
     """Create launcher for menu entries"""
     launcher_text = f"[Desktop Entry]\nName={event_description}_{relay_description}\n"
@@ -156,6 +159,7 @@ for l in lines:
                     relay_type = [["FirstRelayOn",1,0],["SecondRelayOn",0,1],["BothRelaysOff",0,0]]
             else:
                 relay_type = [["FirstRelayOn",1,0],["SecondRelayOn",0,1],["BothRelaysOff",0,0]]
+            STOP_NAME = relay_type[2][0]
             relay_map[line_dict['relay_board_type']].append([line_dict['relay1'], line_dict['name'], is_485, relay_type[0][0]])
             relay_map[line_dict['relay_board_type']].append([line_dict['relay2'], line_dict['name'], is_485, relay_type[1][0]])
             for r in relay_type:
@@ -167,7 +171,7 @@ for l in lines:
                 file_text += activate_relay(line_dict['relay_board_type'], relay1[0], relay1[1], r[RELAY_VALUE], is_485)
                 file_text += activate_relay(line_dict['relay_board_type'], relay2[0], relay2[1], r[RELAY_VALUE_REVERSER], is_485)
                 if r[1] + r[2] > 0: # If one of the relays is turned on (so don't write timestamp on a stop or off script
-                    file_text += write_timestamp_file(line_dict['name'], SCRIPTS_DIR)
+                    file_text += write_timestamp_file(line_dict['name'], SCRIPTS_DIR, STOP_NAME)
                 write_file(SCRIPTS_DIR + file_name, file_text)
                 create_desktop_launcher(USER, SCRIPTS_DIR, line_dict['name'], r[RELAY_DESCRIPTION])
                 menu_cats = add_to_category(menu_cats, line_dict['category'], file_name)
