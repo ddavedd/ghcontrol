@@ -1,1 +1,4 @@
 # Set water schedule here
+# In caes manually started without end, turn off water at 5 55 pm
+55 17 * * * /home/USERNAME/ghcontrol/scripts/Water_1_Off.sh &>> CRON_LOG
+55 17 * * * /home/USERNAME/ghcontrol/scripts/Water_2_Off.sh &>> CRON_LOG
