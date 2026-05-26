@@ -6,3 +6,4 @@ run_at_setup/watchdog_setup.shell
 *.tempf
 *.png
 *.map
+*.timestamp
