@@ -2,7 +2,7 @@ name=Exhaust_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0
 name=Top_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,1
 name=Louver category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=1,1
 name=Haf_Fan category=Airflow type=ON_OFF_SINGLE relay_board_type=3 relay1=0,3 
-name=Rollup_Enable category=Rollups type=ON_OFF_SINGLE relay_board_type=8 relay1=1,1
+name=Rollup_Side_Enable category=Rollups type=ON_OFF_SINGLE relay_board_type=8 relay1=1,1
 name=Rollup_Side_North category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,1 relay2=0,2 name_style=updownstop
 name=Rollup_Side_South category=Rollups type=REVERSING_PAIR relay_board_type=8 relay1=0,7 relay2=0,8 name_style=updownstop
 name=Water_1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=1,6
