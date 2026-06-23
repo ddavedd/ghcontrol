@@ -4,3 +4,5 @@
 0 * * * * /usr/bin/sleep 5s && /home/USERNAME/ghcontrol/scripts/get_status_3.sh &>> CRON_LOG
 0 * * * * /usr/bin/sleep 10s && /home/USERNAME/ghcontrol/status.sh &>> CRON_LOG
 # 0 * * * * /usr/bin/sleep 15s && /home/USERNAME/ghcontrol/status_remote.sh &>> CRON_LOG
+0 * * * * /usr/bin/sleep 20s && /home/USERNAME/ghcontrol/volt_temp_status.sh &>> CRON_LOG
+
