@@ -12,9 +12,9 @@ name=Exhaust_5 category=Exhaust type=ON_OFF_DOUBLE relay_board_type=3 relay1=6,1
 name=Exhaust_6 category=Exhaust type=ON_OFF_DOUBLE relay_board_type=3 relay1=7,2 relay2=7,3 is_485=True
 name=Exhaust_7 category=Exhaust type=ON_OFF_DOUBLE relay_board_type=3 relay1=7,1 relay2=8,3 is_485=True
 name=Exhaust_8 category=Exhaust type=ON_OFF_DOUBLE relay_board_type=3 relay1=8,1 relay2=8,2 is_485=True
-name=Water1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,1 is_485=False
-name=Water2 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,2 is_485=False
-name=Water3 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,3 is_485=False
-name=Water4 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,4 is_485=False
-name=Water5 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5 is_485=False
-name=12v_Relays_Enable category=Control type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6 is_485=False
+name=Water1 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,1
+name=Water2 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,2
+name=Water3 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,3
+name=Water4 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,4
+name=Water5 category=Water type=ON_OFF_SINGLE relay_board_type=8 relay1=0,5
+name=12v_Relays_Enable category=Control type=ON_OFF_SINGLE relay_board_type=8 relay1=0,6
